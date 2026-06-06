@@ -72,7 +72,7 @@ button:hover {
 
 /* Hidden dynamic elements */
 #btn-mwa {
-    display: none; /* Itatago muna hanggang di nacliclick ang unang surprise */
+    display: none;
 }
 
 #secret {
@@ -144,9 +144,9 @@ canvas {
         Stay happy always 💕 You’re appreciated more than you know.
     </div>
 
-    <!-- YouTube Iframe Embed Code -->
+    <!-- Bagong-bago at tamang YouTube video ID para sa kanta mo -->
     <iframe id="yt-player" 
-            src="https://www.youtube.com/embed/SABOTONG_VIDEO_ID?enablejsapi=1&autoplay=0&loop=1" 
+            src="https://www.youtube.com/embed/HuJOVEaOrmw?enablejsapi=1&autoplay=0&loop=1" 
             allow="autoplay">
     </iframe>
 </div>
@@ -164,12 +164,12 @@ function firstClick() {
     document.getElementById("btn-mwa").style.display = "inline-block";
 }
 
-// Pangalawang click: Lalabas ang message, fireworks, at tutugtog ang kanta
+// Pangalawang click: Lalabas ang message, fireworks, at tutugtog ang kanta sa background
 function revealEverything() {
     document.getElementById("btn-mwa").style.display = "none";
     document.getElementById("secret").style.display = "block";
     
-    // Utos para patugtugin ang YouTube Video sa background
+    // Utos para patugtugin ang bagong YouTube Video
     const iframe = document.getElementById("yt-player");
     iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
     

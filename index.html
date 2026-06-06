@@ -10,24 +10,23 @@ body {
     margin: 0;
     height: 100vh;
     overflow: hidden;
-    background: radial-gradient(circle at center, #1a002c 0%, #0d0013 60%, #030007 100%);
+    background: radial-gradient(circle at center, #180028 0%, #080010 70%, #020005 100%);
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
     color: white;
-    letter-spacing: 0.5px;
 }
 
-/* Initial Screen Lock */
+/* Screen Gatekeeper Button */
 #gatekeeper {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: #0d0013;
+    background: #080010;
     z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Cinematic Intro Screens */
+/* Base Layout Container */
 .intro-overlay {
     position: absolute;
     top: 50%;
@@ -35,195 +34,163 @@ body {
     transform: translate(-50%, -50%);
     z-index: 100;
     text-align: center;
-    width: 90%;
+    width: 100%;
     pointer-events: none;
     display: none;
 }
 
-.intro-profile-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #ff66df;
-    box-shadow: 0 0 25px rgba(255, 102, 223, 0.7), 0 0 40px rgba(255, 0, 255, 0.4);
-    margin-bottom: 20px;
-    display: inline-block;
-    background: #220033;
+/* Exact Chandelier Style from image_f25560.jpg */
+.chandelier-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 220px;
+    z-index: 95;
+    pointer-events: none;
+    display: none;
 }
 
-.counter-title {
-    font-size: 1.2rem;
-    font-style: italic;
-    color: rgba(255, 255, 255, 0.85);
-    text-shadow: 0 0 10px rgba(255, 102, 223, 0.4);
-    margin-bottom: 15px;
-}
-
-#day-counter {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: #ff66df;
-    text-shadow: 0 0 20px rgba(255, 102, 223, 0.8), 0 0 40px rgba(255, 0, 255, 0.4);
-    font-family: monospace;
-    letter-spacing: 2px;
-}
-
-/* Chandelier Positioning */
 .chandelier-svg {
-    position: absolute;
-    top: 10px;
-    width: 250px;
-    height: 180px;
-    filter: drop-shadow(0 0 15px rgba(255, 102, 223, 0.8)) drop-shadow(0 0 30px rgba(176, 0, 255, 0.5));
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 15px rgba(255, 70, 210, 0.95)) drop-shadow(0 0 30px rgba(255, 0, 180, 0.6));
+    animation: elegantSway 5s ease-in-out infinite alternate;
     transform-origin: top center;
-    z-index: 5;
-    pointer-events: none;
-    display: none;
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
-    left: 50%;
-    transform: translateX(-50%) translateY(-20px);
 }
 
-.chandelier-svg.reveal {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-    animation: gentleSway 5s ease-in-out infinite alternate;
+@keyframes elegantSway {
+    from { transform: rotate(-1deg); }
+    to { transform: rotate(1deg); }
 }
 
-@keyframes gentleSway {
-    from { transform: translateX(-50%) rotate(-1deg); }
-    to { transform: translateX(-50%) rotate(1deg); }
-}
-
-/* Main Container */
-.container {
-    position: absolute;
-    top: 48%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    width: 90%;
-    z-index: 10;
-    pointer-events: none;
-}
-
-.interactive {
-    pointer-events: auto;
-}
-
-.surprise-content {
-    display: none;
-    animation: smoothFadeIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-@keyframes smoothFadeIn {
-    from { opacity: 0; transform: translateY(20px) scale(0.95); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-h1 {
-    font-size: 2.4rem;
-    font-weight: 600;
-    color: #ff66df;
-    text-shadow: 0 0 15px rgba(255, 102, 223, 0.6), 0 0 30px rgba(255, 0, 255, 0.3);
-    margin-bottom: 5px;
-}
-
-p.subtitle {
-    font-size: 1.1rem;
-    opacity: 0.8;
-    margin-top: 0;
-    margin-bottom: 25px;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-    font-style: italic;
-}
-
-.profile-img {
+/* Target Profile Frame Positioned precisely */
+.intro-profile-img {
     width: 160px;
     height: 160px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #ff66df;
-    box-shadow: 0 0 25px rgba(255, 102, 223, 0.7), 0 0 40px rgba(255, 0, 255, 0.4);
-    margin-bottom: 20px;
-    background: #220033;
+    border: 3.5px solid #ff55d0;
+    box-shadow: 0 0 25px rgba(255, 85, 208, 0.95), 0 0 50px rgba(255, 0, 200, 0.6);
+    margin-bottom: 30px;
+    display: inline-block;
+    background: #150022;
 }
 
-/* Floating Aesthetic Cake */
+.counter-title {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 0 10px rgba(255, 85, 208, 0.6);
+}
+
+#day-counter {
+    font-size: 5rem;
+    font-weight: 900;
+    color: #ff66df;
+    text-shadow: 0 0 25px rgba(255, 85, 208, 0.95), 0 0 60px rgba(255, 0, 200, 0.7);
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    letter-spacing: 4px;
+    margin: 8px 0;
+    font-style: italic;
+}
+
+/* Interaction Button */
+.btn-group-center {
+    position: absolute;
+    top: 82%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 120;
+    pointer-events: auto;
+    display: none;
+}
+
+button {
+    padding: 16px 38px;
+    border: 1px solid rgba(255, 85, 208, 0.6);
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(255, 85, 208, 0.95), rgba(160, 0, 240, 0.95));
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(255, 85, 208, 0.6);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 45px rgba(255, 0, 200, 0.9);
+}
+
+/* Letter Screen CSS */
+.container {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 90%;
+    z-index: 110;
+    pointer-events: none;
+}
+
+.surprise-content {
+    display: none;
+    animation: smoothFadeIn 1.5s ease-out forwards;
+}
+
+@keyframes smoothFadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-size: 2.6rem;
+    color: #ff66df;
+    text-shadow: 0 0 15px rgba(255, 85, 208, 0.8);
+}
+
+#secret {
+    margin-top: 15px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    background: rgba(12, 2, 20, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 25px 35px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 85, 208, 0.3);
+    display: inline-block;
+    max-width: 560px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Floating Cake Design */
 .cake-container {
     display: none; 
     position: absolute;
-    bottom: 90px;
-    right: 50px;
-    z-index: 12;
+    bottom: 40px;
+    right: 40px;
+    z-index: 105;
     text-align: center;
     animation: floatCake 4s ease-in-out infinite alternate;
 }
 
 @keyframes floatCake {
     from { transform: translateY(0px) rotate(-1deg); }
-    to { transform: translateY(-12px) rotate(2deg); }
+    to { transform: translateY(-15px) rotate(2deg); }
 }
 
 .cake-text {
-    font-size: 1.15rem;
-    font-weight: 500;
-    color: #fffb00;
-    text-shadow: 0 0 10px rgba(255, 251, 0, 0.6), 0 0 20px rgba(255, 102, 223, 0.5);
-    margin-top: 8px;
-    letter-spacing: 1px;
-    line-height: 1.4;
-}
-
-/* Buttons Control Center */
-.btn-group-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 20;
-    pointer-events: auto;
-    display: none;
-}
-
-button {
-    padding: 14px 32px;
-    border: 1px solid rgba(255, 102, 223, 0.4);
-    border-radius: 30px;
-    background: linear-gradient(135deg, rgba(255, 102, 223, 0.8), rgba(176, 0, 255, 0.8));
-    color: white;
     font-size: 1.1rem;
-    font-weight: 500;
-    cursor: pointer;
-    box-shadow: 0 0 20px rgba(255, 102, 223, 0.4);
-    backdrop-filter: blur(4px);
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 35px rgba(255, 0, 255, 0.7);
-    border-color: rgba(255, 255, 255, 0.6);
-}
-
-/* Premium Glass Letter Box */
-#secret {
-    margin-top: 20px;
-    font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.95);
-    line-height: 1.8;
-    background: rgba(15, 2, 22, 0.65);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    padding: 22px 28px;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 102, 223, 0.25);
-    display: inline-block;
-    max-width: 540px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-    text-align: center;
+    font-weight: 600;
+    color: #fffb00;
+    text-shadow: 0 0 10px rgba(255, 251, 0, 0.8);
+    margin-top: 5px;
 }
 
 .signature {
@@ -233,19 +200,10 @@ button:hover {
     text-align: center;
     font-size: 0.9rem;
     letter-spacing: 2px;
-    opacity: 0;
-    z-index: 10;
-    transition: opacity 1.5s ease;
-}
-
-.signature.show-signature {
-    opacity: 0.6;
-    animation: delicateGlow 3s infinite alternate;
-}
-
-@keyframes delicateGlow {
-    from { text-shadow: 0 0 8px rgba(255, 102, 223, 0.3); opacity: 0.5; }
-    to { text-shadow: 0 0 15px rgba(255, 102, 223, 0.6); opacity: 0.8; }
+    opacity: 0.7;
+    z-index: 100;
+    text-shadow: 0 0 10px rgba(255, 85, 208, 0.5);
+    display: none;
 }
 
 canvas {
@@ -260,66 +218,85 @@ canvas {
     width: 1px;
     height: 1px;
     opacity: 0;
-    pointer-events: none;
-}
-
-.flash-transition {
-    animation: aestheticFlash 0.4s ease-out;
-}
-@keyframes aestheticFlash {
-    0% { filter: brightness(1.8) hue-rotate(45deg); }
-    100% { filter: none; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- GATEKEEPER CAPTURE INITIAL CLICK -->
 <div id="gatekeeper">
     <button id="main-start-btn" onclick="startEverything()">👉 Open Birthday Gift ✨</button>
 </div>
 
-<!-- 15 Seconds Cinematic Intro Day Counter Overlay -->
+<!-- Accurate SVG Chandelier Layout from image_f25560.jpg -->
+<div class="chandelier-container" id="chandelierLayer">
+    <svg class="chandelier-svg" viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
+        <!-- Center Rod/Chain -->
+        <line x1="250" y1="0" x2="250" y2="45" stroke="#ff55d0" stroke-width="3"/>
+        <circle cx="250" cy="45" r="7" fill="#fff"/>
+        
+        <!-- Top Crown -->
+        <path d="M220 45 Q250 25 280 45" stroke="#ff55d0" stroke-width="2.5" fill="none"/>
+        <path d="M200 55 Q250 35 300 55" stroke="#ff55d0" stroke-width="2" fill="none"/>
+        
+        <!-- Main Elegant Swags & Arms (Perfect Curves) -->
+        <path d="M160 85 Q250 125 340 85" stroke="#ff00aa" stroke-width="4" fill="none"/>
+        <path d="M100 115 Q250 175 400 115" stroke="#ff55d0" stroke-width="4.5" fill="none"/>
+        <path d="M50 145 Q250 225 450 145" stroke="#ff00aa" stroke-width="3" fill="none"/>
+        
+        <!-- Upper Connecting Side Arcs -->
+        <path d="M250 45 Q180 55 160 85" stroke="#ff55d0" stroke-width="2.5" fill="none"/>
+        <path d="M250 45 Q320 55 340 85" stroke="#ff55d0" stroke-width="2.5" fill="none"/>
+        <path d="M250 45 Q150 70 100 115" stroke="#ff00aa" stroke-width="2" fill="none"/>
+        <path d="M250 45 Q350 70 400 115" stroke="#ff00aa" stroke-width="2" fill="none"/>
+        
+        <!-- Drooping Crystal Beaded Garlands -->
+        <path d="M50 145 Q250 250 450 145" stroke="#fff" stroke-width="2" fill="none" stroke-dasharray="3 4"/>
+        <path d="M100 115 Q250 195 400 115" stroke="#fff" stroke-width="1.5" fill="none" stroke-dasharray="2 3"/>
+        
+        <!-- Glowing Light Bulb/Candle Points -->
+        <circle cx="250" cy="75" r="8" fill="#ffffaa" filter="drop-shadow(0 0 8px #fff)"/>
+        <!-- Inner Ring Bulbs -->
+        <circle cx="160" cy="80" r="6" fill="#fff"/>
+        <circle cx="340" cy="80" r="6" fill="#fff"/>
+        <!-- Mid Ring Bulbs -->
+        <circle cx="100" cy="110" r="7" fill="#ffff55"/>
+        <circle cx="400" cy="110" r="7" fill="#ffff55"/>
+        <!-- Outer Ring Premium Bulbs -->
+        <circle cx="50" cy="140" r="8" fill="#fff" filter="drop-shadow(0 0 5px #ff55d0)"/>
+        <circle cx="450" cy="140" r="8" fill="#fff" filter="drop-shadow(0 0 5px #ff55d0)"/>
+        
+        <!-- Hanging Crystal Diamond Pendalogues -->
+        <polygon points="250,170 244,182 250,195 256,182" fill="#fff"/>
+        <polygon points="160,122 155,132 160,142 165,132" fill="#ff55d0"/>
+        <polygon points="340,122 335,132 340,142 345,132" fill="#ff55d0"/>
+        <polygon points="100,145 96,155 100,165 104,155" fill="#fff"/>
+        <polygon points="400,145 396,155 400,165 404,155" fill="#fff"/>
+    </svg>
+</div>
+
+<!-- Main Display Elements -->
 <div class="intro-overlay" id="introScreen">
-    <img src="nicole 2.jpg" alt="Nicole" class="intro-profile-img" onerror="this.onerror=null;">
-    <div class="counter-title" id="counterWrapper">
-        <p style="margin: 0 0 10px 0;">Nicole, since June 14, 2006...</p>
+    <div style="position: relative; display: inline-block; margin-bottom: 5px;">
+        <img src="nicole 2.jpg" alt="Nicole" class="intro-profile-img" onerror="this.onerror=null;">
+    </div>
+    
+    <div class="counter-title">
+        <p style="margin: 0 0 5px 0; font-size: 1.35rem; font-style: italic;">Nicole, since June 14, 2006...</p>
         <div id="day-counter">0 DAYS</div>
-        <p style="margin: 15px 0 0 0; font-size: 0.95rem; opacity: 0.7;">of beautiful moments with you in this world ✨</p>
+        <p style="margin: 5px 0 0 0; font-size: 1.15rem; opacity: 0.9;">of beautiful moments with you...</p>
     </div>
 </div>
 
-<!-- Central Chandelier SVG -->
-<svg class="chandelier-svg" id="centralChandelier" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
-    <line x1="100" y1="0" x2="100" y2="30" stroke="#ff66df" stroke-width="2.5"/>
-    <circle cx="100" cy="30" r="4" fill="#ffccd5"/>
-    <path d="M70 45 Q100 60 130 45" stroke="#b000ff" stroke-width="3" fill="none"/>
-    <path d="M40 65 Q100 90 160 65" stroke="#ff66df" stroke-width="3.5" fill="none"/>
-    <line x1="100" y1="30" x2="100" y2="80" stroke="#ff66df" stroke-width="2"/>
-    <path d="M100 30 Q60 40 40 65" stroke="#b000ff" stroke-width="2" fill="none"/>
-    <path d="M100 30 Q140 40 160 65" stroke="#b000ff" stroke-width="2" fill="none"/>
-    <path d="M40 65 Q100 120 160 65" stroke="#ff66df" stroke-width="2.5" fill="none" stroke-dasharray="2 3"/>
-    <circle cx="40" cy="51" r="5" fill="#fff"/>
-    <circle cx="70" cy="31" r="5" fill="#fff"/>
-    <circle cx="100" cy="83" r="6" fill="#ffff33"/>
-    <circle cx="130" cy="31" r="5" fill="#fff"/>
-    <circle cx="160" cy="51" r="5" fill="#fff"/>
-    <polygon points="100,105 95,113 100,123 105,113" fill="#ff66df"/>
-</svg>
-
-<!-- Buttons Control Center -->
 <div class="btn-group-center" id="buttonContainer">
-    <button id="btn-mwa" onclick="revealEverything()">click mwa 😘</button>
+    <button id="btn-mwa" onclick="revealLetter()">click mwa 😘</button>
 </div>
 
-<!-- Hidden Surprise Section -->
 <div class="container">
     <div class="interactive">
         <div class="surprise-content" id="nicoleContent">
-            <img src="nicole 2.jpg" alt="Nicole" class="profile-img" onerror="this.onerror=null;">
             <h1>Happy Birthday, Nicole sweetie! 🎂</h1>
-            <p class="subtitle">You deserve all the beautiful things in the world ✨</p>
+            <p class="subtitle" style="color: #ff99e0; font-style: italic; font-size: 1.15rem;">You deserve all the beautiful things in the world ✨</p>
             
             <div id="secret">
                 Happy Birthday to the one and only Nicole. 💖 Thank you for every single smile, every deep conversation, and for simply being the wonderful person you are—you bring so much color and light into my world. I feel incredibly blessed to have you in my life, sweetie. I hope today reminds you of how deeply appreciated and loved you are by everyone around you. Always remember that I am right here, cheering you on and supporting you through all your dreams. Happy Birthday, Babyyy mwa! 😘🎂✨
@@ -330,9 +307,9 @@ canvas {
 
 <!-- Floating Neon Cake -->
 <div class="cake-container" id="babyCake">
-    <svg width="130" height="130" viewBox="0 0 100 100">
+    <svg width="120" height="120" viewBox="0 0 100 100">
         <filter id="glow">
-            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
             <feMerge>
                 <feMergeNode in="coloredBlur"/>
                 <feMergeNode in="SourceGraphic"/>
@@ -349,14 +326,14 @@ canvas {
     <div class="cake-text">Happy Birthday,<br>Babyyyy mwa 🎂💖</div>
 </div>
 
-<!-- Hidden Background Music Player -->
+<!-- Background Music -->
 <iframe id="yt-player" 
         src="https://www.youtube.com/embed/HuJOVEaOrmw?enablejsapi=1&autoplay=0&loop=1&playlist=HuJOVEaOrmw" 
         allow="autoplay">
 </iframe>
 
 <div class="signature" id="revySignature">
-    MADE WITH 💖 BY REVY 💌
+    MADE WITH ❤️ BY REVY 💌
 </div>
 
 <canvas id="mainCanvas"></canvas>
@@ -365,16 +342,13 @@ canvas {
 const canvas = document.getElementById("mainCanvas");
 const ctx = canvas.getContext("2d");
 
-let activeIntro = false;
 let stage = 0; 
-let branches = [];
-let flowers = [];
-let particles = [];
+let fireworkSystems = [];
 let fallingPetals = [];
 let stars = [];
-let introSparks = [];
-let treeHearts = []; 
-let introFireworkInterval = null;
+let heartCanopy = [];
+let sideRisingHearts = [];
+let fireworkTimer = 0;
 
 function resize() {
     canvas.width = window.innerWidth;
@@ -383,166 +357,234 @@ function resize() {
 window.addEventListener("resize", resize);
 resize();
 
-// Star Field Preparation
-for(let i = 0; i < 90; i++) {
+// Starfield Background
+for(let i = 0; i < 110; i++) {
     stars.push({
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
-        size: Math.random() * 1.8,
-        speed: Math.random() * 0.4 + 0.08
+        size: Math.random() * 1.8 + 0.4,
+        speed: Math.random() * 0.2 + 0.05
     });
 }
 
 function startEverything() {
-    try {
-        document.getElementById("gatekeeper").style.display = "none";
-        document.getElementById("introScreen").style.display = "block";
-        activeIntro = true;
-        
-        // Growth Trigger
-        createBranch(canvas.width / 2, canvas.height, -Math.PI / 2, 12.5, 16, "#281102");
-        
-        // Audio Trigger
-        const iframe = document.getElementById("yt-player");
-        if(iframe && iframe.contentWindow) {
-            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-            iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-        }
-
-        // Calculate days since June 14, 2006
-        const birthDate = new Date("2006-06-14");
-        const today = new Date();
-        const diffTime = Math.abs(today - birthDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        animateDaysCounter(diffDays, 11500);
-
-        // Background Fireworks Loop
-        introFireworkInterval = setInterval(createFirework, 600);
-
-        // Floating Hearts for Tree
-        for(let h=0; h<40; h++) {
-            treeHearts.push({
-                angle: Math.random() * Math.PI * 2,
-                radius: Math.random() * 120 + 40,
-                speed: Math.random() * 0.04 + 0.01,
-                size: Math.random() * 5 + 4,
-                opacity: Math.random() * 0.5 + 0.5,
-                yOffset: Math.random() * -250 - 50 
-            });
-        }
-
-        // Exact 15 Seconds Transition
-        setTimeout(() => {
-            if(introFireworkInterval) clearInterval(introFireworkInterval);
-            document.getElementById("introScreen").style.display = "none";
-            
-            const chandelier = document.getElementById("centralChandelier");
-            if(chandelier) {
-                chandelier.style.display = "block";
-                setTimeout(() => chandelier.classList.add("reveal"), 50);
-            }
-
-            document.getElementById("buttonContainer").style.display = "block";
-            document.getElementById("revySignature").classList.add("show-signature");
-            stage = 1; 
-        }, 15000); 
-    } catch (e) {
-        console.error(e);
-        document.getElementById("gatekeeper").style.display = "none";
-        document.getElementById("buttonContainer").style.display = "block";
+    document.getElementById("gatekeeper").style.display = "none";
+    document.getElementById("introScreen").style.display = "block";
+    document.getElementById("chandelierLayer").style.display = "block";
+    document.getElementById("revySignature").style.display = "block";
+    
+    // Auto Music Triggers
+    const iframe = document.getElementById("yt-player");
+    if(iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
     }
+
+    // Target Days Counter Init
+    const birthDate = new Date("2006-06-14");
+    const today = new Date();
+    const diffDays = Math.ceil(Math.abs(today - birthDate) / (1000 * 60 * 60 * 24));
+    animateDaysCounter(diffDays, 8000);
+
+    // Build the precise Heart Layout structures matching image_f25560.jpg
+    generateAestheticHearts();
+
+    stage = 1;
+
+    setTimeout(() => {
+        if(stage === 1) {
+            document.getElementById("buttonContainer").style.display = "block";
+        }
+    }, 4500);
 }
 
 function animateDaysCounter(targetDays, duration) {
     const counterEl = document.getElementById("day-counter");
     let startTime = null;
-    
     function step(timestamp) {
         if (!startTime) startTime = timestamp;
         const progress = Math.min((timestamp - startTime) / duration, 1);
-        const easeProgress = 1 - Math.pow(1 - progress, 3);
-        const currentDays = Math.floor(easeProgress * targetDays);
-        
-        if(counterEl) counterEl.innerText = currentDays + " DAYS";
+        const ease = 1 - Math.pow(1 - progress, 4);
+        if(counterEl) counterEl.innerText = Math.floor(ease * targetDays) + " DAYS";
         if (progress < 1) window.requestAnimationFrame(step);
     }
     window.requestAnimationFrame(step);
 }
 
-function revealEverything() {
-    document.getElementById("buttonContainer").style.display = "none";
-    document.getElementById("nicoleContent").style.display = "block";
-    document.getElementById("babyCake").style.display = "block";
-    stage = 2;
-
-    document.body.classList.add("flash-transition");
-    setTimeout(() => document.body.classList.remove("flash-transition"), 400);
+function generateAestheticHearts() {
+    const centerX = canvas.width / 2;
+    // Align relative to image location
+    const centerY = canvas.height * 0.5 - 130; 
     
-    setInterval(createFirework, 700);
-    setInterval(createPetal, 25);
-}
+    // 1. Bottom Tray/U-Shape Canopy Heart Arch
+    const totalCanopyPoints = 60;
+    for(let i = 0; i <= totalCanopyPoints; i++) {
+        // Sweep angle underneath image (from 0 to PI around the lower hemisphere)
+        let angle = (parseFloat(i) / totalCanopyPoints) * Math.PI;
+        let rx = 160 + (Math.random() * 15 - 75); // Thickness layering
+        let ry = 110 + (Math.random() * 15 - 7.5);
 
-function createBranch(startX, startY, angle, length, thickness, color) {
-    branches.push({
-        startX, startY,
-        endX: startX, endY: startY,
-        targetX: startX + Math.cos(angle) * length * 11.5,
-        targetY: startY + Math.sin(angle) * length * 11.5,
-        angle, length, thickness, color,
-        currentProgress: 0,
-        childGenerated: false
-    });
-}
+        heartCanopy.push({
+            baseX: centerX + Math.cos(angle) * 160,
+            baseY: centerY + Math.sin(angle) * 110,
+            x: centerX,
+            y: canvas.height + 50,
+            targetX: centerX + Math.cos(angle) * 160 + (Math.random() * 20 - 10),
+            targetY: centerY + Math.sin(angle) * 110 + (Math.random() * 20 - 10),
+            size: Math.random() * 7 + 7,
+            color: ["#ff44cc", "#ff66df", "#ff80ab", "#ffccd5", "#e91e63"][Math.floor(Math.random() * 5)],
+            progress: 0,
+            speed: Math.random() * 0.02 + 0.015,
+            delay: Math.random() * 40
+        });
+    }
 
-class Particle {
-    constructor(x, y, color) {
-        this.x = x;
-        this.y = y;
-        this.color = color;
-        this.radius = Math.random() * 2.5 + 1;
-        this.speedX = (Math.random() - 0.5) * 12;
-        this.speedY = (Math.random() - 0.5) * 12;
-        this.alpha = 1;
-    }
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.alpha -= 0.014;
-    }
-    draw() {
-        ctx.globalAlpha = this.alpha;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-    }
-}
-
-function createFirework() {
-    const x = Math.random() * canvas.width;
-    const y = Math.random() * (canvas.height / 2.2);
-    const colors = ["#ff66df", "#00ffff", "#ffff33", "#ff4f79", "#b000ff"];
-    for (let i = 0; i < 50; i++) {
-        particles.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
-    }
-}
-
-function createPetal() {
-    if (fallingPetals.length < 300) {
-        fallingPetals.push({
-            x: Math.random() * canvas.width,
-            y: -10,
-            speedX: Math.random() * 2.5 - 1.25,
-            speedY: Math.random() * 2.2 + 1.8,
-            size: Math.random() * 4.5 + 4.5,
-            opacity: Math.random() * 0.6 + 0.4,
-            rotation: Math.random() * Math.PI
+    // 2. Rising Outer Side Heart Framing (Spanning Left & Right Tracks)
+    for(let j = 0; j < 35; j++) {
+        let isLeft = Math.random() > 0.5;
+        sideRisingHearts.push({
+            x: isLeft ? (Math.random() * 120 + 40) : (canvas.width - (Math.random() * 120 + 40)),
+            y: canvas.height + Math.random() * 400,
+            speedY: Math.random() * 1.5 + 0.8,
+            driftX: Math.sin(Math.random() * Math.PI),
+            size: Math.random() * 8 + 6,
+            color: isLeft ? "#ff66df" : "#ff44cc",
+            alpha: Math.random() * 0.5 + 0.5
         });
     }
 }
 
-function drawCanvasHeart(x, y, size, color, alpha) {
+function revealLetter() {
+    document.getElementById("buttonContainer").style.display = "none";
+    document.getElementById("introScreen").style.display = "none";
+    document.getElementById("nicoleContent").style.display = "block";
+    document.getElementById("babyCake").style.display = "block";
+    stage = 2;
+    setInterval(createPetal, 45);
+}
+
+// PREMIUM JAPANESE HANABI FIREWORK SYSTEM
+class HanabiFirework {
+    constructor(x, y, colorTheme) {
+        this.x = x;
+        this.y = y;
+        this.particles = [];
+        
+        // Japanese Shell Parameters (Double Layer Rings)
+        const ringCount1 = 50; 
+        const ringCount2 = 35;
+        
+        // Outer Core Ring
+        for(let i=0; i<ringCount1; i++) {
+            let angle = (i / ringCount1) * Math.PI * 2;
+            let speed = Math.random() * 1.5 + 5.5; // High velocity match
+            this.particles.push(new HanabiParticle(x, y, angle, speed, colorTheme, true));
+        }
+        // Inner Contrasting Ring
+        let innerColor = colorTheme === "#ff66df" ? "#00ffff" : "#ffff33";
+        for(let j=0; j<ringCount2; j++) {
+            let angle = (j / ringCount2) * Math.PI * 2;
+            let speed = Math.random() * 1.0 + 3.2; 
+            this.particles.push(new HanabiParticle(x, y, angle, speed, innerColor, false));
+        }
+    }
+    update() {
+        this.particles.forEach(p => p.update());
+    }
+    draw() {
+        this.particles.forEach(p => p.draw());
+    }
+    isDead() {
+        return this.particles.every(p => p.alpha <= 0);
+    }
+}
+
+class HanabiParticle {
+    constructor(x, y, angle, speed, color, hasTail) {
+        this.x = x;
+        this.y = y;
+        this.startX = x;
+        this.startY = y;
+        this.speedX = Math.cos(angle) * speed;
+        this.speedY = Math.sin(angle) * speed;
+        this.color = color;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.01 + 0.007;
+        this.gravity = 0.035;
+        this.hasTail = hasTail;
+        this.history = []; // Tail tracking for Japanese trailing effect
+    }
+    update() {
+        if(this.hasTail) {
+            this.history.push({x: this.x, y: this.y});
+            if(this.history.length > 5) this.history.shift();
+        }
+
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.speedY += this.gravity; // Subtle weight descent
+        this.speedX *= 0.98; // Air friction slow down
+        this.speedY *= 0.98;
+        this.alpha -= this.decay;
+    }
+    draw() {
+        ctx.save();
+        
+        // Render Trailing Charcoal Spark paths
+        if(this.hasTail && this.history.length > 1) {
+            ctx.beginPath();
+            ctx.moveTo(this.history[0].x, this.history[0].y);
+            for(let h=1; h<this.history.length; h++) {
+                ctx.lineTo(this.history[h].x, this.history[h].y);
+            }
+            ctx.strokeStyle = this.color;
+            ctx.globalAlpha = this.alpha * 0.3;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
+
+        // Render main spark head
+        ctx.globalAlpha = this.alpha;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = this.color;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        // Outer shells break into larger points
+        ctx.arc(this.x, this.y, this.hasTail ? 2.5 : 1.8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+}
+
+function triggerHanabiBlast() {
+    // Left, Right and Center upper segments matching the layout image profile balance
+    const spots = [
+        {x: canvas.width * 0.2, y: canvas.height * 0.4},
+        {x: canvas.width * 0.8, y: canvas.height * 0.42},
+        {x: canvas.width * 0.5 + (Math.random()*300-150), y: canvas.height * 0.25}
+    ];
+    let selected = spots[Math.floor(Math.random() * spots.length)];
+    const colors = ["#ff66df", "#00ffff", "#ffff44", "#ff3366", "#b000ff", "#ffffff"];
+    let theme = colors[Math.floor(Math.random() * colors.length)];
+    
+    fireworkSystems.push(new HanabiFirework(selected.x, selected.y, theme));
+}
+
+function createPetal() {
+    if (fallingPetals.length < 140) {
+        fallingPetals.push({
+            x: Math.random() * canvas.width,
+            y: -10,
+            speedX: Math.random() * 2 - 1,
+            speedY: Math.random() * 1.8 + 1.6,
+            size: Math.random() * 5 + 4,
+            opacity: Math.random() * 0.6 + 0.4,
+            rot: Math.random() * Math.PI
+        });
+    }
+}
+
+function drawElegantHeart(x, y, size, color, alpha) {
     ctx.save();
     ctx.globalAlpha = alpha;
     ctx.fillStyle = color;
@@ -556,8 +598,9 @@ function drawCanvasHeart(x, y, size, color, alpha) {
     ctx.restore();
 }
 
-function drawBackgroundEffects() {
-    ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+function drawCyberGrid() {
+    // Draw background stars
+    ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
     stars.forEach(s => {
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
@@ -566,163 +609,93 @@ function drawBackgroundEffects() {
         if(s.y > canvas.height) s.y = 0;
     });
 
-    ctx.strokeStyle = "rgba(255, 102, 223, 0.04)";
+    // Perspective Lines Grid Framework matching template perfectly
+    ctx.strokeStyle = "rgba(255, 85, 208, 0.05)";
     ctx.lineWidth = 1;
-    const gridSpacing = 65;
-    
-    for(let i = 0; i < canvas.width; i += gridSpacing) {
+    let horizonY = canvas.height * 0.45;
+    for (let i = -300; i < canvas.width + 300; i += 75) {
         ctx.beginPath();
-        ctx.moveTo(canvas.width / 2, 0);
+        ctx.moveTo(canvas.width / 2, horizonY);
         ctx.lineTo(i, canvas.height);
         ctx.stroke();
     }
-    for(let i = 0; i < canvas.height; i += gridSpacing) {
+    for (let j = horizonY; j < canvas.height; j += 35) {
         ctx.beginPath();
-        ctx.moveTo(0, i);
-        ctx.lineTo(canvas.width, i);
+        ctx.moveTo(0, j);
+        ctx.lineTo(canvas.width, j);
         ctx.stroke();
     }
 }
 
-function animate() {
-    ctx.fillStyle = "rgba(10, 0, 16, 0.22)"; 
+function masterAnimationLoop() {
+    ctx.fillStyle = "rgba(8, 0, 14, 0.28)"; 
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    drawBackgroundEffects();
+    drawCyberGrid();
 
-    particles.forEach((p, i) => {
-        p.update();
-        p.draw();
-        if (p.alpha <= 0) particles.splice(i, 1);
-    });
-
-    if (activeIntro) {
-        treeHearts.forEach(h => {
-            h.angle += h.speed; 
-            let treeX = canvas.width / 2 + Math.cos(h.angle) * h.radius;
-            let treeY = (canvas.height - 180) + Math.sin(h.angle) * (h.radius * 0.4) + h.yOffset;
-            
-            drawCanvasHeart(treeX, treeY, h.size, "#ff66df", h.opacity);
-        });
-
-        branches.forEach(b => {
-            if (b.currentProgress < 1) {
-                b.currentProgress += 0.038; 
-                b.endX = b.startX + (b.targetX - b.startX) * b.currentProgress;
-                b.endY = b.startY + (b.targetY - b.startY) * b.currentProgress;
-            }
-
-            ctx.beginPath();
-            ctx.moveTo(b.startX, b.startY);
-            ctx.lineTo(b.endX, b.endY);
-            ctx.lineWidth = b.thickness;
-            ctx.strokeStyle = b.color;
-            ctx.lineCap = "round";
-            ctx.stroke();
-
-            if (b.currentProgress >= 1 && !b.childGenerated) {
-                b.childGenerated = true;
-                if (b.length > 3) {
-                    let leftAngleBias = -0.45 + (b.thickness > 10 ? -0.15 : 0.05);
-                    let rightAngleBias = 0.45 + (b.thickness > 10 ? -0.05 : -0.05);
-
-                    createBranch(b.endX, b.endY, b.angle + leftAngleBias + (Math.random() * 0.12), b.length * 0.76, b.thickness * 0.68, b.color);
-                    createBranch(b.endX, b.endY, b.angle + rightAngleBias - (Math.random() * 0.12), b.length * 0.76, b.thickness * 0.68, b.color);
-                } else {
-                    for(let k=0; k<6; k++) { 
-                        introSparks.push({
-                            x: b.endX, y: b.endY,
-                            vx: (Math.random() - 0.5) * 3,
-                            vy: (Math.random() - 0.5) * 3,
-                            alpha: 1,
-                            color: ["#fffb00", "#ff66df", "#00ffff"][Math.floor(Math.random() * 3)],
-                            size: Math.random() * 2.5 + 1,
-                            targetFlowerX: b.endX + (Math.random() * 20 - 10),
-                            targetFlowerY: b.endY + (Math.random() * 20 - 10)
-                        });
-                    }
-                    
-                    setTimeout(() => {
-                        for (let i = 0; i < 6; i++) {
-                            flowers.push({
-                                x: b.endX + (Math.random() * 20 - 10),
-                                y: b.endY + (Math.random() * 20 - 10),
-                                size: 0,
-                                maxSize: Math.random() * 6.5 + 3.5,
-                                color: ["#ffccd5", "#ff80ab", "#ff66df", "#f48fb1"][Math.floor(Math.random() * 4)]
-                            });
-                        }
-                    }, 350); 
-                }
-            }
-        });
+    if(stage >= 1) {
+        fireworkTimer++;
+        if(fireworkTimer % 40 === 0) { // Steady, beautiful timing
+            triggerHanabiBlast();
+        }
     }
 
-    introSparks.forEach((s, idx) => {
-        s.x += s.vx; s.y += s.vy;
-        s.vx += (s.targetFlowerX - s.x) * 0.05;
-        s.vy += (s.targetFlowerY - s.y) * 0.05;
-        s.alpha -= 0.02;
+    // Process & Animate Hanabi Fireworks
+    fireworkSystems.forEach((sys, idx) => {
+        sys.update();
+        sys.draw();
+        if(sys.isDead()) fireworkSystems.splice(idx, 1);
+    });
 
-        if(s.alpha > 0) {
-            ctx.save();
-            ctx.globalAlpha = s.alpha;
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = s.color;
-            ctx.fillStyle = s.color;
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-        } else {
-            introSparks.splice(idx, 1);
+    // Render & Grow lower Tray Heart Canopy
+    heartCanopy.forEach(p => {
+        if (p.delay > 0) {
+            p.delay--;
+        } else if (p.progress < 1) {
+            p.progress += p.speed;
+            p.x = canvas.width / 2 + (p.targetX - (canvas.width / 2)) * p.progress;
+            p.y = (canvas.height + 50) - ((canvas.height + 50) - p.targetY) * p.progress;
+        }
+        drawElegantHeart(p.x, p.y, p.size, p.color, 0.9);
+    });
+
+    // Render continuous floating side framing hearts
+    sideRisingHearts.forEach(h => {
+        h.y -= h.speedY;
+        h.x += Math.sin(Date.now() * 0.002 + h.y) * 0.4;
+        drawElegantHeart(h.x, h.y, h.size, h.color, h.alpha);
+        if(h.y < -20) {
+            h.y = canvas.height + 50;
+            h.x = Math.random() > 0.5 ? (Math.random() * 120 + 40) : (canvas.width - (Math.random() * 120 + 40));
         }
     });
 
-    flowers.forEach(f => {
-        if (f.size < f.maxSize) f.size += 0.15;
-
-        let pulse = 0;
-        if (stage === 2) {
-            pulse = Math.sin(Date.now() * 0.012) * 2.2; 
-        }
-
-        ctx.beginPath();
-        ctx.arc(f.x, f.y, Math.max(1, f.size + pulse), 0, Math.PI * 2);
-        ctx.fillStyle = f.color;
-        ctx.shadowBlur = stage === 2 ? 10 : 0;
-        ctx.shadowColor = f.color;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-    });
-
+    // Falling Petals Stage 2 Interaction
     if (stage === 2) {
-        fallingPetals.forEach((petal, i) => {
+        fallingPetals.forEach((petal, idx) => {
             petal.y += petal.speedY;
-            petal.x += Math.sin(Date.now() * 0.004 + petal.x) * 0.6;
-            petal.rotation += 0.015;
+            petal.x += Math.sin(Date.now() * 0.003 + petal.x) * 0.5;
+            petal.rot += 0.02;
 
             ctx.save();
             ctx.translate(petal.x, petal.y);
-            ctx.rotate(petal.rotation);
-            ctx.fillStyle = "#ff80ab";
+            ctx.rotate(petal.rot);
+            ctx.fillStyle = "#ff72be";
             ctx.globalAlpha = petal.opacity;
-            
             ctx.beginPath();
             ctx.ellipse(0, 0, petal.size, petal.size / 1.8, 0, 0, Math.PI * 2);
             ctx.fill();
             ctx.restore();
 
-            if (petal.y > canvas.height) fallingPetals.splice(i, 1);
+            if (petal.y > canvas.height) fallingPetals.splice(idx, 1);
         });
     }
 
-    ctx.globalAlpha = 1.0;
-    requestAnimationFrame(animate);
+    requestAnimationFrame(masterAnimationLoop);
 }
 
 window.addEventListener('load', () => {
-    animate();
+    masterAnimationLoop();
 });
 </script>
 

@@ -389,36 +389,38 @@ function animateDaysCounter(targetDays, duration) {
     window.requestAnimationFrame(step);
 }
 
-// Generates the upward curve layout pattern mirroring exactly your provided tree flower screen
+// PINALAKI AT PINALAPAD NA CANOPY RADIAL ALGORITHM (Sumasayad halos sa gilid ng frame gaya ng target mo)
 function generateAestheticCanopy() {
     const centerX = canvas.width / 2;
-    // Posisyon sa may tapat ng "click mwa" area
-    const targetYBase = canvas.height * 0.82; 
+    // Tinitiyak na ang sentro ng arko ay sasakay sa gitna hanggang itaas ng button line natin
+    const targetYBase = canvas.height * 0.76; 
 
-    const totalFlowerBlooms = 140;
+    const totalFlowerBlooms = 260; // Dinagdagan ng density para mas malago ang pagkabulaklak
     for(let i = 0; i < totalFlowerBlooms; i++) {
-        // Anggulo na lumilikha ng paitaas na pabilog na arko (mula PI hanggang 2*PI para salubong pataas)
-        let angle = Math.PI + (parseFloat(i) / totalFlowerBlooms) * Math.PI;
-        let radiusX = 170 + (Math.random() * 25 - 12.5);
-        let radiusY = 90 + (Math.random() * 20 - 10);
+        // Gumagawa ng perfect wide upward arc curve
+        let angle = Math.PI + 0.1 + (parseFloat(i) / totalFlowerBlooms) * (Math.PI - 0.2);
+        
+        // Mas malapad na Radius X para sa high-spread canopy structure
+        let radiusX = 290 + (Math.random() * 55 - 27.5);
+        let radiusY = 140 + (Math.random() * 40 - 20);
 
         let tx = centerX + Math.cos(angle) * radiusX;
-        let ty = targetYBase + Math.sin(angle) * radiusY + 30;
+        let ty = targetYBase + Math.sin(angle) * radiusY + 60;
 
         flowerCanopyPoints.push({
             x: centerX,
             y: canvas.height + 40,
             targetX: tx,
             targetY: ty,
-            size: Math.random() * 5 + 6,
-            color: ["#ff44cc", "#ff66df", "#ff80ab", "#ffccd5", "#ff72be"][Math.floor(Math.random() * 5)],
+            size: Math.random() * 6 + 6,
+            color: ["#ff3bb2", "#ff66df", "#ff80ab", "#ffccd5", "#ff72be", "#ffa4db"][Math.floor(Math.random() * 6)],
             progress: 0,
-            speed: Math.random() * 0.02 + 0.012,
-            delay: Math.random() * 35
+            speed: Math.random() * 0.018 + 0.01,
+            delay: Math.random() * 45
         });
     }
 
-    // Side framing particles
+    // Side framing floating elements
     for(let j = 0; j < 35; j++) {
         let isLeft = Math.random() > 0.5;
         sideRisingHearts.push({
@@ -433,60 +435,86 @@ function generateAestheticCanopy() {
     }
 }
 
-// Dynamic Vector Curved Tree Trunk at Branches structure matching the image
+// PINAGANDANG CHERRY BLOSSOM TRUNK VECTOR (Mas makapal na puno at maraming sanga tulad ng image_e592a5.jpg)
 function drawLoveTreeTrunk() {
     if (stage < 1) return;
     
     const centerX = canvas.width / 2;
-    const baseTrunkY = canvas.height * 0.96;
-    const splitY = canvas.height * 0.85; 
-    const buttonCenterY = canvas.height * 0.82;
+    const baseTrunkY = canvas.height * 0.98;
+    const splitY = canvas.height * 0.82; 
+    const targetYBase = canvas.height * 0.76;
 
     ctx.save();
-    ctx.shadowBlur = 12;
-    ctx.shadowColor = "#ff44cc";
-    ctx.strokeStyle = "rgba(100, 45, 15, 0.85)"; // Elegant brown glowing bark accent
-    ctx.lineWidth = 6;
-    ctx.lineCap = "round";
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = "#ff55d0";
     
-    // Main base trunk line
+    // Solid organic thick root base trunk look
+    ctx.lineWidth = 14;
+    ctx.strokeStyle = "rgba(42, 14, 46, 0.9)"; // Dark mystical trunk tone
     ctx.beginPath();
     ctx.moveTo(centerX, baseTrunkY);
-    ctx.lineTo(centerX, splitY);
+    ctx.lineTo(centerX, splitY + 10);
     ctx.stroke();
 
-    // Secondary vector structural branches sweeping up around the click target
+    // Secondary layer inner trunk core glow line
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "rgba(255, 60, 180, 0.65)";
+    ctx.beginPath();
+    ctx.moveTo(centerX, baseTrunkY);
+    ctx.lineTo(centerX, splitY + 10);
+    ctx.stroke();
+
+    // MGA SANGANG KUMAKALAT (Multi-stage Forking branches sweeping high out around the profile zone)
+    ctx.lineCap = "round";
+    
+    // Main Left Wing Branch
+    ctx.lineWidth = 7;
+    ctx.strokeStyle = "rgba(42, 14, 46, 0.9)";
+    ctx.beginPath();
+    ctx.moveTo(centerX, splitY + 5);
+    ctx.quadraticCurveTo(centerX - 80, splitY + 20, centerX - 180, targetYBase + 30);
+    ctx.stroke();
+    
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "rgba(255, 75, 195, 0.7)";
+    ctx.stroke();
+
+    // Main Right Wing Branch
+    ctx.lineWidth = 7;
+    ctx.strokeStyle = "rgba(42, 14, 46, 0.9)";
+    ctx.beginPath();
+    ctx.moveTo(centerX, splitY + 5);
+    ctx.quadraticCurveTo(centerX + 80, splitY + 20, centerX + 180, targetYBase + 30);
+    ctx.stroke();
+    
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "rgba(255, 75, 195, 0.7)";
+    ctx.stroke();
+
+    // Upper Sub-branches extending under button
     ctx.lineWidth = 3.5;
-    ctx.strokeStyle = "rgba(120, 50, 30, 0.75)";
-
-    // Left main branch sweeping upwards
+    ctx.strokeStyle = "rgba(42, 14, 46, 0.85)";
+    
+    // Left High curve extension
     ctx.beginPath();
-    ctx.moveTo(centerX, splitY);
-    ctx.quadraticCurveTo(centerX - 60, splitY + 5, centerX - 120, buttonCenterY - 15);
+    ctx.moveTo(centerX - 90, targetYBase + 25);
+    ctx.quadraticCurveTo(centerX - 170, targetYBase - 15, centerX - 240, targetYBase + 20);
     ctx.stroke();
 
-    // Right main branch sweeping upwards
+    // Right High curve extension
     ctx.beginPath();
-    ctx.moveTo(centerX, splitY);
-    ctx.quadraticCurveTo(centerX + 60, splitY + 5, centerX + 120, buttonCenterY - 15);
+    ctx.moveTo(centerX + 90, targetYBase + 25);
+    ctx.quadraticCurveTo(centerX + 170, targetYBase - 15, centerX + 240, targetYBase + 20);
     ctx.stroke();
 
-    // Sub-branches rendering
-    ctx.lineWidth = 1.8;
-    for(let k = 1; k <= 5; k++) {
-        let factor = k / 6;
-        // left micro branch
-        ctx.beginPath();
-        ctx.moveTo(centerX - (60 * factor), splitY + 3);
-        ctx.quadraticCurveTo(centerX - 110, splitY - (40 * factor), centerX - (150 * factor), buttonCenterY + 10);
-        ctx.stroke();
-
-        // right micro branch
-        ctx.beginPath();
-        ctx.moveTo(centerX + (60 * factor), splitY + 3);
-        ctx.quadraticCurveTo(centerX + 110, splitY - (40 * factor), centerX + (150 * factor), buttonCenterY + 10);
-        ctx.stroke();
-    }
+    // Center Forking extensions
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(centerX, splitY);
+    ctx.quadraticCurveTo(centerX - 40, targetYBase + 30, centerX - 60, targetYBase - 5);
+    ctx.moveTo(centerX, splitY);
+    ctx.quadraticCurveTo(centerX + 40, targetYBase + 30, centerX + 60, targetYBase - 5);
+    ctx.stroke();
     
     ctx.restore();
 }
@@ -617,7 +645,7 @@ function createPetal() {
 function drawCherryBloomCircular(x, y, size, color) {
     ctx.save();
     ctx.fillStyle = color;
-    ctx.shadowBlur = 8;
+    ctx.shadowBlur = 10;
     ctx.shadowColor = color;
     ctx.beginPath();
     ctx.arc(x, y, size, 0, Math.PI * 2);
@@ -656,86 +684,4 @@ function drawCyberGrid() {
         ctx.beginPath();
         ctx.moveTo(canvas.width / 2, horizonY);
         ctx.lineTo(i, canvas.height);
-        ctx.stroke();
-    }
-    for (let j = horizonY; j < canvas.height; j += 35) {
-        ctx.beginPath();
-        ctx.moveTo(0, j);
-        ctx.lineTo(canvas.width, j);
-        ctx.stroke();
-    }
-}
-
-function masterAnimationLoop() {
-    ctx.fillStyle = "rgba(8, 0, 14, 0.28)"; 
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    drawCyberGrid();
-
-    if(stage >= 1) {
-        fireworkTimer++;
-        if(fireworkTimer % 40 === 0) { 
-            triggerHanabiBlast();
-        }
-        // Iguhit ang mga sanga ng puno
-        drawLoveTreeTrunk();
-    }
-
-    fireworkSystems.forEach((sys, idx) => {
-        sys.update();
-        sys.draw();
-        if(sys.isDead()) fireworkSystems.splice(idx, 1);
-    });
-
-    // Drawing the perfect arch tree flower blooms precisely matching your target image structure
-    flowerCanopyPoints.forEach(p => {
-        if (p.delay > 0) {
-            p.delay--;
-        } else if (p.progress < 1) {
-            p.progress += p.speed;
-            p.x = canvas.width / 2 + (p.targetX - (canvas.width / 2)) * p.progress;
-            p.y = (canvas.height + 40) - ((canvas.height + 40) - p.targetY) * p.progress;
-        }
-        drawCherryBloomCircular(p.x, p.y, p.size, p.color);
-    });
-
-    sideRisingHearts.forEach(h => {
-        h.y -= h.speedY;
-        h.x += Math.sin(Date.now() * 0.002 + h.y) * 0.4;
-        drawElegantHeart(h.x, h.y, h.size, h.color, h.alpha);
-        if(h.y < -20) {
-            h.y = canvas.height + 50;
-            h.x = Math.random() > 0.5 ? (Math.random() * 120 + 40) : (canvas.width - (Math.random() * 120 + 40));
-        }
-    });
-
-    if (stage === 2) {
-        fallingPetals.forEach((petal, idx) => {
-            petal.y += petal.speedY;
-            petal.x += Math.sin(Date.now() * 0.003 + petal.x) * 0.5;
-            petal.rot += 0.02;
-
-            ctx.save();
-            ctx.translate(petal.x, petal.y);
-            ctx.rotate(petal.rot);
-            ctx.fillStyle = "#ff72be";
-            ctx.globalAlpha = petal.opacity;
-            ctx.beginPath();
-            ctx.ellipse(0, 0, petal.size, petal.size / 1.8, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-
-            if (petal.y > canvas.height) fallingPetals.splice(idx, 1);
-        });
-    }
-
-    requestAnimationFrame(masterAnimationLoop);
-}
-
-window.addEventListener('load', () => {
-    masterAnimationLoop();
-});
-</script>
-
-</body>
-</html>
+        ctx.

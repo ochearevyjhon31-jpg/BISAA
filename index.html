@@ -252,4 +252,520 @@ canvas {
         <circle cx="450" cy="140" r="8" fill="#fff" filter="drop-shadow(0 0 5px #ff55d0)"/>
         <polygon points="250,170 244,182 250,195 256,182" fill="#fff"/>
         <polygon points="160,122 155,132 160,142 165,132" fill="#ff55d0"/>
-        <polygon points="
+        <polygon points="340,122 335,132 340,142 345,132" fill="#ff55d0"/>
+        <polygon points="100,145 96,155 100,165 104,155" fill="#fff"/>
+        <polygon points="400,145 396,155 400,165 404,155" fill="#fff"/>
+    </svg>
+</div>
+
+<div class="intro-overlay" id="introScreen">
+    <div style="position: relative; display: inline-block; margin-bottom: 5px;">
+        <img src="nicole 2.jpg" alt="Nicole" class="intro-profile-img" onerror="this.onerror=null;">
+    </div>
+    
+    <div class="counter-title">
+        <p style="margin: 0 0 5px 0; font-size: 1.35rem; font-style: italic;">Nicole, since June 14, 2006...</p>
+        <div id="day-counter">0 DAYS</div>
+        <p style="margin: 5px 0 0 0; font-size: 1.15rem; opacity: 0.9;">of beautiful moments with you...</p>
+    </div>
+</div>
+
+<div class="btn-group-center" id="buttonContainer">
+    <button id="btn-mwa" onclick="revealLetter()">click mwa 😘</button>
+</div>
+
+<div class="container">
+    <div class="interactive">
+        <div class="surprise-content" id="nicoleContent">
+            <h1>Happy Birthday, Nicole sweetie! 🎂</h1>
+            <p class="subtitle" style="color: #ff99e0; font-style: italic; font-size: 1.15rem;">You deserve all the beautiful things in the world ✨</p>
+            
+            <div id="secret">
+                Happy Birthday to the one and only Nicole. 💖 Thank you for every single smile, every deep conversation, and for simply being the wonderful person you are—you bring so much color and light into my world. I feel incredibly blessed to have you in my life, sweetie. I hope today reminds you of how deeply appreciated and loved you are by everyone around you. Always remember that I am right here, cheering you on and supporting you through all your dreams. Happy Birthday, Babyyy mwa! 😘🎂✨
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cake-container" id="babyCake">
+    <svg width="120" height="120" viewBox="0 0 100 100">
+        <filter id="glow">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <rect x="47" y="15" width="6" height="15" fill="#00ffff" filter="url(#glow)"/>
+        <path d="M50 5 Q47 10 50 15 Q53 10 50 5" fill="#ffaa00" filter="url(#glow)"/>
+        <rect x="30" y="30" width="40" height="20" rx="4" fill="#ff66df" filter="url(#glow)"/>
+        <rect x="30" y="38" width="40" height="3" fill="#fff"/>
+        <rect x="20" y="50" width="60" height="25" rx="4" fill="#b000ff" filter="url(#glow)"/>
+        <rect x="20" y="60" width="60" height="4" fill="#ffff00"/>
+        <ellipse cx="50" cy="77" rx="35" ry="5" fill="#00ffff" filter="url(#glow)"/>
+    </svg>
+    <div class="cake-text">Happy Birthday,<br>Babyyyy mwa 🎂💖</div>
+</div>
+
+<iframe id="yt-player" 
+        src="https://www.youtube.com/embed/HuJOVEaOrmw?enablejsapi=1&autoplay=0&loop=1&playlist=HuJOVEaOrmw" 
+        allow="autoplay">
+</iframe>
+
+<div class="signature" id="revySignature">
+    MADE WITH ❤️ BY REVY 💌
+</div>
+
+<canvas id="mainCanvas"></canvas>
+
+<script>
+const canvas = document.getElementById("mainCanvas");
+const ctx = canvas.getContext("2d");
+
+let stage = 0; 
+let fireworkSystems = [];
+let fallingPetals = [];
+let stars = [];
+let flowerCanopyPoints = [];
+let treeBranchesData = [];
+let sideRisingHearts = [];
+let fireworkTimer = 0;
+
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+// Starfield Background Setup
+for(let i = 0; i < 110; i++) {
+    stars.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: Math.random() * 1.8 + 0.4,
+        speed: Math.random() * 0.2 + 0.05
+    });
+}
+
+// SAFE NON-BLOCKING PRE-RENDER FRACTAL GENERATOR
+function preRenderFractalTree() {
+    treeBranchesData = [];
+    flowerCanopyPoints = [];
+    
+    const startX = canvas.width / 2;
+    const startY = canvas.height * 0.98;
+
+    // Safe queue stack-based system para iwas frozen loops/stuck screen
+    let branchQueue = [];
+    
+    // Simulan ang root branch: Base width ay 16px, nakaturo paitaas (-Math.PI/2)
+    branchQueue.push({
+        x1: startX, y1: startY,
+        angle: -Math.PI / 2,
+        length: canvas.height * 0.16,
+        thickness: 16,
+        depth: 0
+    });
+
+    while(branchQueue.length > 0 && treeBranchesData.length < 500) {
+        let b = branchQueue.shift();
+        
+        let x2 = b.x1 + Math.cos(b.angle) * b.length;
+        let y2 = b.y1 + Math.sin(b.angle) * b.length;
+
+        treeBranchesData.push({
+            x1: b.x1, y1: b.y1,
+            x2: x2, y2: y2,
+            thickness: b.thickness,
+            progress: 0,
+            speed: 0.04 + Math.random() * 0.02,
+            delay: b.depth * 8
+        });
+
+        // Kapag nasa gitna o dulo na ng mga sanga, magtanim ng makapal na blossom spots
+        if (b.depth >= 3) {
+            let blooms = (6 - b.depth) * 12;
+            for (let i = 0; i < blooms; i++) {
+                let spreadRadius = (6 - b.depth) * 18 * Math.random();
+                let randomAngle = Math.random() * Math.PI * 2;
+                
+                flowerCanopyPoints.push({
+                    x: startX,
+                    y: startY,
+                    targetX: x2 + Math.cos(randomAngle) * spreadRadius,
+                    targetY: y2 + Math.sin(randomAngle) * spreadRadius,
+                    size: Math.random() * 5 + 5.5,
+                    color: ["#ff3bb2", "#ff66df", "#ff80ab", "#ffccd5", "#ff72be", "#ffa4db"][Math.floor(Math.random() * 6)],
+                    progress: 0,
+                    speed: 0.02 + Math.random() * 0.015,
+                    delay: b.depth * 10 + Math.random() * 20
+                });
+            }
+        }
+
+        // Magpatuloy maghati paitaas hanggang depth level 5
+        if(b.depth < 5) {
+            let forks = Math.random() > 0.75 ? 3 : 2;
+            for(let k = 0; k < forks; k++) {
+                let nextAngle = b.angle + (Math.random() * 0.5 - 0.25);
+                if (b.depth === 0) {
+                    // Mas malawak na hati sa unang salubong pakaliwa at pakanan para sa profile frame hugis
+                    nextAngle = b.angle + (k === 0 ? -0.55 : 0.55);
+                }
+                
+                branchQueue.push({
+                    x1: x2, y1: y2,
+                    angle: nextAngle,
+                    length: b.length * (0.72 + Math.random() * 0.1),
+                    thickness: b.thickness * 0.65,
+                    depth: b.depth + 1
+                });
+            }
+        }
+    }
+
+    // Side framing floating hearts
+    sideRisingHearts = [];
+    for(let j = 0; j < 35; j++) {
+        let isLeft = Math.random() > 0.5;
+        sideRisingHearts.push({
+            x: isLeft ? (Math.random() * 120 + 40) : (canvas.width - (Math.random() * 120 + 40)),
+            y: canvas.height + Math.random() * 400,
+            speedY: Math.random() * 1.5 + 0.8,
+            driftX: Math.sin(Math.random() * Math.PI),
+            size: Math.random() * 6 + 5,
+            color: isLeft ? "#ff66df" : "#ff44cc",
+            alpha: Math.random() * 0.5 + 0.5
+        });
+    }
+}
+
+function startEverything() {
+    document.getElementById("gatekeeper").style.display = "none";
+    document.getElementById("introScreen").style.display = "block";
+    document.getElementById("chandelierLayer").style.display = "block";
+    document.getElementById("revySignature").style.display = "block";
+    
+    const iframe = document.getElementById("yt-player");
+    if(iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+    }
+
+    const birthDate = new Date("2006-06-14");
+    const today = new Date();
+    const diffDays = Math.ceil(Math.abs(today - birthDate) / (1000 * 60 * 60 * 24));
+    animateDaysCounter(diffDays, 8000);
+
+    // Ligtas na kalkulahin ang hugis ng bagong puno bago lumabas
+    preRenderFractalTree();
+
+    stage = 1;
+
+    setTimeout(() => {
+        if(stage === 1) {
+            document.getElementById("buttonContainer").style.display = "block";
+        }
+    }, 4500);
+}
+
+function animateDaysCounter(targetDays, duration) {
+    const counterEl = document.getElementById("day-counter");
+    let startTime = null;
+    function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 4);
+        if(counterEl) counterEl.innerText = Math.floor(ease * targetDays) + " DAYS";
+        if (progress < 1) window.requestAnimationFrame(step);
+    }
+    window.requestAnimationFrame(step);
+}
+
+function drawLoveTreeTrunk() {
+    if (stage < 1) return;
+    
+    ctx.save();
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = "#ff55d0";
+    ctx.lineCap = "round";
+
+    treeBranchesData.forEach(b => {
+        if (b.delay > 0) {
+            b.delay--;
+        } else {
+            if (b.progress < 1) b.progress += b.speed;
+            
+            let currentX = b.x1 + (b.x2 - b.x1) * b.progress;
+            let currentY = b.y1 + (b.y2 - b.y1) * b.progress;
+
+            // Organic premium dark wood tone
+            ctx.strokeStyle = "rgba(42, 14, 46, 0.95)";
+            ctx.lineWidth = b.thickness;
+            ctx.beginPath();
+            ctx.moveTo(b.x1, b.y1);
+            ctx.lineTo(currentX, currentY);
+            ctx.stroke();
+
+            // Glowing cherry center line core
+            ctx.strokeStyle = "rgba(255, 70, 185, 0.45)";
+            ctx.lineWidth = b.thickness * 0.28;
+            ctx.beginPath();
+            ctx.moveTo(b.x1, b.y1);
+            ctx.lineTo(currentX, currentY);
+            ctx.stroke();
+        }
+    });
+
+    ctx.restore();
+}
+
+function revealLetter() {
+    document.getElementById("buttonContainer").style.display = "none";
+    document.getElementById("introScreen").style.display = "none";
+    document.getElementById("nicoleContent").style.display = "block";
+    document.getElementById("babyCake").style.display = "block";
+    stage = 2;
+    setInterval(createPetal, 45);
+}
+
+// PREMIUM JAPANESE HANABI FIREWORK SYSTEM
+class HanabiFirework {
+    constructor(x, y, colorTheme) {
+        this.x = x;
+        this.y = y;
+        this.particles = [];
+        
+        const ringCount1 = 50; 
+        const ringCount2 = 35;
+        
+        for(let i=0; i<ringCount1; i++) {
+            let angle = (i / ringCount1) * Math.PI * 2;
+            let speed = Math.random() * 1.5 + 5.5; 
+            this.particles.push(new HanabiParticle(x, y, angle, speed, colorTheme, true));
+        }
+        let innerColor = colorTheme === "#ff66df" ? "#00ffff" : "#ffff33";
+        for(let j=0; j<ringCount2; j++) {
+            let angle = (j / ringCount2) * Math.PI * 2;
+            let speed = Math.random() * 1.0 + 3.2; 
+            this.particles.push(new HanabiParticle(x, y, angle, speed, innerColor, false));
+        }
+    }
+    update() {
+        this.particles.forEach(p => p.update());
+    }
+    draw() {
+        this.particles.forEach(p => p.draw());
+    }
+    isDead() {
+        return this.particles.every(p => p.alpha <= 0);
+    }
+}
+
+class HanabiParticle {
+    constructor(x, y, angle, speed, color, hasTail) {
+        this.x = x;
+        this.y = y;
+        this.startX = x;
+        this.startY = y;
+        this.speedX = Math.cos(angle) * speed;
+        this.speedY = Math.sin(angle) * speed;
+        this.color = color;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.01 + 0.007;
+        this.gravity = 0.035;
+        this.hasTail = hasTail;
+        this.history = []; 
+    }
+    update() {
+        if(this.hasTail) {
+            this.history.push({x: this.x, y: this.y});
+            if(this.history.length > 5) this.history.shift();
+        }
+
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.speedY += this.gravity; 
+        this.speedX *= 0.98; 
+        this.speedY *= 0.98;
+        this.alpha -= this.decay;
+    }
+    draw() {
+        ctx.save();
+        
+        if(this.hasTail && this.history.length > 1) {
+            ctx.beginPath();
+            ctx.moveTo(this.history[0].x, this.history[0].y);
+            for(let h=1; h<this.history.length; h++) {
+                ctx.lineTo(this.history[h].x, this.history[h].y);
+            }
+            ctx.strokeStyle = this.color;
+            ctx.globalAlpha = this.alpha * 0.3;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
+
+        ctx.globalAlpha = this.alpha;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = this.color;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.hasTail ? 2.5 : 1.8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+}
+
+function triggerHanabiBlast() {
+    const spots = [
+        {x: canvas.width * 0.2, y: canvas.height * 0.4},
+        {x: canvas.width * 0.8, y: canvas.height * 0.42},
+        {x: canvas.width * 0.5 + (Math.random()*300-150), y: canvas.height * 0.25}
+    ];
+    let selected = spots[Math.floor(Math.random() * spots.length)];
+    const colors = ["#ff66df", "#00ffff", "#ffff44", "#ff3366", "#b000ff", "#ffffff"];
+    let theme = colors[Math.floor(Math.random() * colors.length)];
+    
+    fireworkSystems.push(new HanabiFirework(selected.x, selected.y, theme));
+}
+
+function createPetal() {
+    if (fallingPetals.length < 140) {
+        fallingPetals.push({
+            x: Math.random() * canvas.width,
+            y: -10,
+            speedX: Math.random() * 2 - 1,
+            speedY: Math.random() * 1.8 + 1.6,
+            size: Math.random() * 5 + 4,
+            opacity: Math.random() * 0.6 + 0.4,
+            rot: Math.random() * Math.PI
+        });
+    }
+}
+
+function drawCherryBloomCircular(x, y, size, color) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = color;
+    ctx.beginPath();
+    ctx.arc(x, y, size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+}
+
+function drawElegantHeart(x, y, size, color, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = color;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.bezierCurveTo(x - size/2, y - size/2, x - size, y + size/3, x, y + size);
+    ctx.bezierCurveTo(x + size, y + size/3, x + size/2, y - size/2, x, y);
+    ctx.fill();
+    ctx.restore();
+}
+
+function drawCyberGrid() {
+    ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+    stars.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.fill();
+        s.y += s.speed;
+        if(s.y > canvas.height) s.y = 0;
+    });
+
+    ctx.strokeStyle = "rgba(255, 85, 208, 0.05)";
+    ctx.lineWidth = 1;
+    let horizonY = canvas.height * 0.45;
+    for (let i = -300; i < canvas.width + 300; i += 75) {
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2, horizonY);
+        ctx.lineTo(i, canvas.height);
+        ctx.stroke();
+    }
+    for (let j = horizonY; j < canvas.height; j += 35) {
+        ctx.beginPath();
+        ctx.moveTo(0, j);
+        ctx.lineTo(canvas.width, j);
+        ctx.stroke();
+    }
+}
+
+function masterAnimationLoop() {
+    ctx.fillStyle = "rgba(8, 0, 14, 0.28)"; 
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    drawCyberGrid();
+
+    if(stage >= 1) {
+        fireworkTimer++;
+        if(fireworkTimer % 40 === 0) { 
+            triggerHanabiBlast();
+        }
+        // Iguhit ang mga static pre-calculated branches
+        drawLoveTreeTrunk();
+    }
+
+    fireworkSystems.forEach((sys, idx) => {
+        sys.update();
+        sys.draw();
+        if(sys.isDead()) fireworkSystems.splice(idx, 1);
+    });
+
+    // Bulaklak rendering loop gamit ang pre-calculated structure spots
+    flowerCanopyPoints.forEach(p => {
+        if (p.delay > 0) {
+            p.delay--;
+        } else if (p.progress < 1) {
+            p.progress += p.speed;
+            p.x = canvas.width / 2 + (p.targetX - (canvas.width / 2)) * p.progress;
+            p.y = (canvas.height + 40) - ((canvas.height + 40) - p.targetY) * p.progress;
+        }
+        drawCherryBloomCircular(p.x, p.y, p.size, p.color);
+    });
+
+    sideRisingHearts.forEach(h => {
+        h.y -= h.speedY;
+        h.x += Math.sin(Date.now() * 0.002 + h.y) * 0.4;
+        drawElegantHeart(h.x, h.y, h.size, h.color, h.alpha);
+        if(h.y < -20) {
+            h.y = canvas.height + 50;
+            h.x = Math.random() > 0.5 ? (Math.random() * 120 + 40) : (canvas.width - (Math.random() * 120 + 40));
+        }
+    });
+
+    if (stage === 2) {
+        fallingPetals.forEach((petal, idx) => {
+            petal.y += petal.speedY;
+            petal.x += Math.sin(Date.now() * 0.003 + petal.x) * 0.5;
+            petal.rot += 0.02;
+
+            ctx.save();
+            ctx.translate(petal.x, petal.y);
+            ctx.rotate(petal.rot);
+            ctx.fillStyle = "#ff72be";
+            ctx.globalAlpha = petal.opacity;
+            ctx.beginPath();
+            ctx.ellipse(0, 0, petal.size, petal.size / 1.8, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+
+            if (petal.y > canvas.height) fallingPetals.splice(idx, 1);
+        });
+    }
+
+    requestAnimationFrame(masterAnimationLoop);
+}
+
+window.addEventListener('load', () => {
+    masterAnimationLoop();
+});
+</script>
+
+</body>
+</html>

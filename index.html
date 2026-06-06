@@ -16,29 +16,43 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Big Aesthetic Chandelier Center Top */
+/* Chandeliers Absolute Positioning */
 .chandelier-svg {
     position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 320px;
-    height: 220px;
-    filter: drop-shadow(0 0 15px rgba(255, 102, 223, 0.85)) drop-shadow(0 0 30px rgba(176, 0, 255, 0.5));
+    top: 0;
+    width: 180px;
+    height: 130px;
+    filter: drop-shadow(0 0 12px rgba(255, 102, 223, 0.6)) drop-shadow(0 0 25px rgba(176, 0, 255, 0.3));
+    transform-origin: top center;
     z-index: 5;
     pointer-events: none;
-    animation: gentleSway 4s ease-in-out infinite alternate;
+    display: block !important;
 }
 
-@keyframes gentleSway {
-    from { transform: translateX(-50%) rotate(-1.5deg); }
-    to { transform: translateX(-50%) rotate(1.5deg); }
+.left-ch {
+    left: 5%;
+    animation: gentleSwayLeft 5s ease-in-out infinite alternate;
 }
 
-/* Main UI Elements Container */
+.right-ch {
+    right: 5%;
+    animation: gentleSwayRight 6s ease-in-out infinite alternate;
+}
+
+@keyframes gentleSwayLeft {
+    from { transform: rotate(-3deg); }
+    to { transform: rotate(3deg); }
+}
+
+@keyframes gentleSwayRight {
+    from { transform: rotate(3deg); }
+    to { transform: rotate(-3deg); }
+}
+
+/* Main Container */
 .container {
     position: absolute;
-    top: 50%;
+    top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -47,41 +61,123 @@ body {
     pointer-events: none;
 }
 
+.interactive {
+    pointer-events: auto;
+}
+
+.surprise-content {
+    display: none;
+    animation: smoothFadeIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes smoothFadeIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+h1 {
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: #ff66df;
+    text-shadow: 0 0 15px rgba(255, 102, 223, 0.6), 0 0 30px rgba(255, 0, 255, 0.3);
+    margin-bottom: 5px;
+}
+
+p.subtitle {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    font-style: italic;
+}
+
 .profile-img {
-    width: 170px;
-    height: 170px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3.5px solid #ff66df;
-    box-shadow: 0 0 25px rgba(255, 102, 223, 0.8), 0 0 50px rgba(255, 0, 255, 0.5);
-    margin-bottom: 25px;
+    border: 3px solid #ff66df;
+    box-shadow: 0 0 25px rgba(255, 102, 223, 0.7), 0 0 40px rgba(255, 0, 255, 0.4);
+    margin-bottom: 20px;
 }
 
-h2.sub-info {
-    font-size: 1.25rem;
-    font-weight: 400;
-    color: #ffffff;
-    opacity: 0.9;
-    margin: 0;
-    font-style: italic;
-    text-shadow: 0 0 8px rgba(255, 102, 223, 0.5);
+/* Floating Aesthetic Cake */
+.cake-container {
+    display: none; 
+    position: absolute;
+    bottom: 90px;
+    right: 50px;
+    z-index: 12;
+    text-align: center;
+    animation: floatCake 4s ease-in-out infinite alternate;
 }
 
-.counter-days {
-    font-size: 4.8rem;
-    font-weight: 700;
-    color: #ff66df;
-    font-style: italic;
-    text-shadow: 0 0 20px rgba(255, 102, 223, 0.9), 0 0 40px rgba(255, 0, 255, 0.6);
-    margin: 10px 0;
-    letter-spacing: 2px;
+@keyframes floatCake {
+    from { transform: translateY(0px) rotate(-1deg); }
+    to { transform: translateY(-12px) rotate(2deg); }
 }
 
-.beautiful-text {
+.cake-text {
     font-size: 1.15rem;
-    opacity: 0.85;
-    color: #ffffff;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+    font-weight: 500;
+    color: #fffb00;
+    text-shadow: 0 0 10px rgba(255, 251, 0, 0.6), 0 0 20px rgba(255, 102, 223, 0.5);
+    margin-top: 8px;
+    letter-spacing: 1px;
+    line-height: 1.4;
+}
+
+/* Aesthetic Glassmorphism Buttons */
+.btn-group-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    pointer-events: auto;
+}
+
+button {
+    padding: 14px 32px;
+    border: 1px solid rgba(255, 102, 223, 0.4);
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(255, 102, 223, 0.8), rgba(176, 0, 255, 0.8));
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 102, 223, 0.4);
+    backdrop-filter: blur(4px);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 35px rgba(255, 0, 255, 0.7);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+#btn-mwa {
+    display: none;
+}
+
+/* Premium Aesthetic Glass Letter Box */
+#secret {
+    margin-top: 20px;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.8;
+    background: rgba(15, 2, 22, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 22px 28px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 102, 223, 0.25);
+    display: inline-block;
+    max-width: 540px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    text-align: center;
 }
 
 .signature {
@@ -91,9 +187,14 @@ h2.sub-info {
     text-align: center;
     font-size: 0.9rem;
     letter-spacing: 2px;
-    opacity: 0.7;
-    text-shadow: 0 0 10px rgba(255, 102, 223, 0.5);
+    opacity: 0.6;
+    animation: delicateGlow 3s infinite alternate;
     z-index: 10;
+}
+
+@keyframes delicateGlow {
+    from { text-shadow: 0 0 8px rgba(255, 102, 223, 0.3); opacity: 0.5; }
+    to { text-shadow: 0 0 15px rgba(255, 102, 223, 0.6); opacity: 0.8; }
 }
 
 canvas {
@@ -103,55 +204,108 @@ canvas {
     z-index: 1;
 }
 
-/* Perspective Grid Floor Background Like the Screenshot */
-.grid-floor {
+#yt-player {
     position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 35vh;
-    background-image: 
-        linear-gradient(rgba(255, 102, 223, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 102, 223, 0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-position: center;
-    transform: perspective(200px) rotateX(60deg);
-    transform-origin: bottom;
-    opacity: 0.7;
-    z-index: 0;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
     pointer-events: none;
+}
+
+.flash-transition {
+    animation: aestheticFlash 0.4s ease-out;
+}
+@keyframes aestheticFlash {
+    0% { filter: brightness(1.8) hue-rotate(45deg); }
+    100% { filter: none; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="grid-floor"></div>
-
-<!-- Neon Chandelier from the Screenshot -->
-<svg class="chandelier-svg" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
-    <line x1="100" y1="0" x2="100" y2="30" stroke="#ff66df" stroke-width="2.5"/>
-    <circle cx="100" cy="30" r="4" fill="#ffccd5"/>
-    <path d="M70 45 Q100 60 130 45" stroke="#b000ff" stroke-width="3" fill="none"/>
-    <path d="M40 65 Q100 90 160 65" stroke="#ff66df" stroke-width="3.5" fill="none"/>
-    <line x1="100" y1="30" x2="100" y2="80" stroke="#ff66df" stroke-width="2"/>
-    <path d="M100 30 Q60 40 40 65" stroke="#b000ff" stroke-width="2" fill="none"/>
-    <path d="M100 30 Q140 40 160 65" stroke="#b000ff" stroke-width="2" fill="none"/>
-    <path d="M40 65 Q100 120 160 65" stroke="#ff66df" stroke-width="2.5" fill="none" stroke-dasharray="2 3"/>
-    <circle cx="40" cy="51" r="5" fill="#fff"/>
-    <circle cx="70" cy="31" r="5" fill="#fff"/>
-    <circle cx="100" cy="83" r="6" fill="#ffff33"/>
-    <circle cx="130" cy="31" r="5" fill="#fff"/>
-    <circle cx="160" cy="51" r="5" fill="#fff"/>
-    <polygon points="100,105 95,113 100,123 105,113" fill="#ff66df"/>
+<!-- Left Chandelier -->
+<svg class="chandelier-svg left-ch" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+    <line x1="100" y1="0" x2="100" y2="35" stroke="#ff66df" stroke-width="2.5"/>
+    <circle cx="100" cy="35" r="4" fill="#ffccd5"/>
+    <path d="M70 50 Q100 65 130 50" stroke="#b000ff" stroke-width="3" fill="none"/>
+    <path d="M40 70 Q100 95 160 70" stroke="#ff66df" stroke-width="3.5" fill="none"/>
+    <line x1="100" y1="35" x2="100" y2="85" stroke="#ff66df" stroke-width="2"/>
+    <path d="M100 35 Q60 45 40 70" stroke="#b000ff" stroke-width="2" fill="none"/>
+    <path d="M100 35 Q140 45 160 70" stroke="#b000ff" stroke-width="2" fill="none"/>
+    <path d="M40 70 Q100 125 160 70" stroke="#ff66df" stroke-width="2.5" fill="none" stroke-dasharray="2 3"/>
+    <circle cx="40" cy="56" r="4.5" fill="#fff"/>
+    <circle cx="70" cy="36" r="4.5" fill="#fff"/>
+    <circle cx="100" cy="88" r="5" fill="#ffff33"/>
+    <circle cx="130" cy="36" r="4.5" fill="#fff"/>
+    <circle cx="160" cy="56" r="4.5" fill="#fff"/>
+    <polygon points="100,110 95,118 100,128 105,118" fill="#ff66df"/>
 </svg>
 
-<!-- Main UI Section -->
-<div class="container">
-    <img src="nicole 2.jpg" alt="Nicole" class="profile-img">
-    <h2 class="sub-info">Nicole, since June 14, 2006...</h2>
-    <div class="counter-days">7305 DAYS</div>
-    <div class="beautiful-text">of beautiful moments with you... ✨</div>
+<!-- Right Chandelier -->
+<svg class="chandelier-svg right-ch" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+    <line x1="100" y1="0" x2="100" y2="35" stroke="#ff66df" stroke-width="2.5"/>
+    <circle cx="100" cy="35" r="4" fill="#ffccd5"/>
+    <path d="M70 50 Q100 65 130 50" stroke="#b000ff" stroke-width="3" fill="none"/>
+    <path d="M40 70 Q100 95 160 70" stroke="#ff66df" stroke-width="3.5" fill="none"/>
+    <line x1="100" y1="35" x2="100" y2="85" stroke="#ff66df" stroke-width="2"/>
+    <path d="M100 35 Q60 45 40 70" stroke="#b000ff" stroke-width="2" fill="none"/>
+    <path d="M100 35 Q140 45 160 70" stroke="#b000ff" stroke-width="2" fill="none"/>
+    <path d="M40 70 Q100 125 160 70" stroke="#ff66df" stroke-width="2.5" fill="none" stroke-dasharray="2 3"/>
+    <circle cx="40" cy="56" r="4.5" fill="#fff"/>
+    <circle cx="70" cy="36" r="4.5" fill="#fff"/>
+    <circle cx="100" cy="88" r="5" fill="#ffff33"/>
+    <circle cx="130" cy="36" r="4.5" fill="#fff"/>
+    <circle cx="160" cy="56" r="4.5" fill="#fff"/>
+    <polygon points="100,110 95,118 100,128 105,118" fill="#ff66df"/>
+</svg>
+
+<!-- Buttons Control Center -->
+<div class="btn-group-center" id="buttonContainer">
+    <button id="btn-surprise" onclick="firstClick()">💖 Click for a surprise</button>
+    <button id="btn-mwa" onclick="revealEverything()">click mwa 😘</button>
 </div>
+
+<!-- Hidden Surprise Section -->
+<div class="container">
+    <div class="interactive">
+        <div class="surprise-content" id="nicoleContent">
+            <img src="nicole 2.jpg" alt="Nicole" class="profile-img">
+            <h1>Happy Birthday, Nicole sweetie! 🎂</h1>
+            <p class="subtitle">You deserve all the beautiful things in the world ✨</p>
+            
+            <div id="secret">
+                Happy Birthday to the one and only Nicole. 💖 Thank you for every single smile, every deep conversation, and for simply being the wonderful person you are—you bring so much color and light into my world. I feel incredibly blessed to have you in my life, sweetie. I hope today reminds you of how deeply appreciated and loved you are by everyone around you. Always remember that I am right here, cheering you on and supporting you through all your dreams. Happy Birthday, Babyyy mwa! 😘🎂✨
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Floating Neon Cake -->
+<div class="cake-container" id="babyCake">
+    <svg width="130" height="130" viewBox="0 0 100 100">
+        <filter id="glow">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <rect x="47" y="15" width="6" height="15" fill="#00ffff" filter="url(#glow)"/>
+        <path d="M50 5 Q47 10 50 15 Q53 10 50 5" fill="#ffaa00" filter="url(#glow)"/>
+        <rect x="30" y="30" width="40" height="20" rx="4" fill="#ff66df" filter="url(#glow)"/>
+        <rect x="30" y="38" width="40" height="3" fill="#fff"/>
+        <rect x="20" y="50" width="60" height="25" rx="4" fill="#b000ff" filter="url(#glow)"/>
+        <rect x="20" y="60" width="60" height="4" fill="#ffff00"/>
+        <ellipse cx="50" cy="77" rx="35" ry="5" fill="#00ffff" filter="url(#glow)"/>
+    </svg>
+    <div class="cake-text">Happy Birthday,<br>Babyyyy mwa 🎂💖</div>
+</div>
+
+<iframe id="yt-player" 
+        src="https://www.youtube.com/embed/HuJOVEaOrmw?enablejsapi=1&autoplay=0&loop=1&mute=1" 
+        allow="autoplay">
+</iframe>
 
 <div class="signature">
     MADE WITH 💖 BY REVY 💌
@@ -163,10 +317,11 @@ canvas {
 const canvas = document.getElementById("mainCanvas");
 const ctx = canvas.getContext("2d");
 
+let stage = 0; 
 let branches = [];
 let flowers = [];
 let particles = [];
-let fallingHearts = [];
+let fallingPetals = [];
 let stars = [];
 
 function resize() {
@@ -176,135 +331,138 @@ function resize() {
 window.addEventListener("resize", resize);
 resize();
 
-// Starfield Background
-for(let i = 0; i < 60; i++) {
+for(let i = 0; i < 90; i++) {
     stars.push({
         x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight * 0.7,
-        size: Math.random() * 1.5,
-        alpha: Math.random() * 0.8 + 0.2
+        y: Math.random() * window.innerHeight,
+        size: Math.random() * 1.8,
+        speed: Math.random() * 0.4 + 0.08
     });
 }
 
-// INSTANT GENERATION ON LOAD
-function init() {
-    // Gumawa agad ng Mataba at Malaking Puno sa gitna sa ilalim
-    createBranch(canvas.width / 2, canvas.height, -Math.PI / 2, 11, 14, "#2a1102");
+function firstClick() {
+    document.getElementById("btn-surprise").style.display = "none";
+    document.getElementById("btn-mwa").style.display = "inline-block";
+    stage = 1;
+    // GINAWANG BIG AESTHETIC BONSAI STYLE: Ginawang dambuhala yung puno (12.5 length) at malapad yung base
+    createBranch(canvas.width / 2, canvas.height, -Math.PI / 2, 12.5, 16, "#2e1603");
+}
+
+function revealEverything() {
+    document.getElementById("buttonContainer").style.display = "none";
+    document.getElementById("nicoleContent").style.display = "block";
+    document.getElementById("babyCake").style.display = "block";
+    stage = 2;
+
+    document.body.classList.add("flash-transition");
+    setTimeout(() => document.body.classList.remove("flash-transition"), 400);
     
-    // Simulan agad ang sabog ng mga dambuhalang Japanese Fireworks at Puso
-    setInterval(createJapaneseFirework, 600);
-    setInterval(createHeartPetal, 40);
+    const iframe = document.getElementById("yt-player");
+    iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    
+    // GINAWANG JAPANESE HANABI LOOP: Mas mabilis na burst rate (750ms)
+    setInterval(createFirework, 750);
+    setInterval(createPetal, 30);
 }
 
 function createBranch(startX, startY, angle, length, thickness, color) {
     branches.push({
         startX, startY,
         endX: startX, endY: startY,
-        targetX: startX + Math.cos(angle) * length * 11,
-        targetY: startY + Math.sin(angle) * length * 11,
+        targetX: startX + Math.cos(angle) * length * 11.8,
+        targetY: startY + Math.sin(angle) * length * 11.8,
         angle, length, thickness, color,
         currentProgress: 0,
         childGenerated: false
     });
 }
 
-class FireworkParticle {
-    constructor(x, y, color, speedMultiplier) {
+class Particle {
+    constructor(x, y, color) {
         this.x = x;
         this.y = y;
         this.color = color;
-        this.radius = Math.random() * 2.5 + 1.2;
-        const angle = Math.random() * Math.PI * 2;
-        const speed = (Math.random() * 7 + 3) * speedMultiplier; 
-        this.speedX = Math.cos(angle) * speed;
-        this.speedY = Math.sin(angle) * speed;
-        this.gravity = 0.04;
+        this.radius = Math.random() * 2.5 + 1;
+        this.speedX = (Math.random() - 0.5) * 12;
+        this.speedY = (Math.random() - 0.5) * 12;
         this.alpha = 1;
-        this.decay = Math.random() * 0.01 + 0.008;
     }
     update() {
-        this.speedY += this.gravity;
         this.x += this.speedX;
         this.y += this.speedY;
-        this.alpha -= this.decay;
+        this.alpha -= 0.012;
     }
     draw() {
-        ctx.save();
         ctx.globalAlpha = this.alpha;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = this.color;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = this.color;
         ctx.fill();
-        ctx.restore();
     }
 }
 
-// MALALAKING JAPANESE FIREWORKS (SABOG SA GILID AT TAAS KATULAD NG SCREENSHOT)
-function createJapaneseFirework() {
-    // Nagpapalit-palit sa kaliwa, kanan, at bandang itaas
-    const positions = [
-        { x: canvas.width * 0.20, y: canvas.height * 0.35 },
-        { x: canvas.width * 0.80, y: canvas.height * 0.40 },
-        { x: canvas.width * 0.35, y: canvas.height * 0.25 },
-        { x: canvas.width * 0.65, y: canvas.height * 0.30 }
-    ];
-    
-    const target = positions[Math.floor(Math.random() * positions.length)];
-    const colors = ["#ff66df", "#00ffff", "#ffff55", "#ff3366", "#b000ff", "#ff99bb"];
-    const fireworkColor = colors[Math.floor(Math.random() * colors.length)];
-    
-    // 75 Particles para talagang dambuhala at siksik ang bilog ng sabog
-    for (let i = 0; i < 75; i++) {
-        particles.push(new FireworkParticle(target.x, target.y, fireworkColor, 1.3));
+function createFirework() {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * (canvas.height / 2.2);
+    const colors = ["#ff66df", "#00ffff", "#ffff33", "#ff4f79", "#b000ff"];
+    // GINAWANG BIG JAPANESE EXPLOSION: Dinagdagan ng particles (50) per explosion para malaking bilog
+    for (let i = 0; i < 50; i++) {
+        particles.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
     }
 }
 
-// HUGIS PUSONG MGA PETALS MULA SA SCREENSHOT
-function createHeartPetal() {
-    if (fallingHearts.length < 180) {
-        fallingHearts.push({
+function createPetal() {
+    if (fallingPetals.length < 300) {
+        fallingPetals.push({
             x: Math.random() * canvas.width,
             y: -10,
-            speedX: Math.random() * 2 - 1,
-            speedY: Math.random() * 1.5 + 1.5,
-            size: Math.random() * 6 + 6,
-            opacity: Math.random() * 0.7 + 0.3,
-            rotation: Math.random() * Math.PI,
-            rotSpeed: Math.random() * 0.02 - 0.01
+            speedX: Math.random() * 2.5 - 1.25,
+            speedY: Math.random() * 2.2 + 1.8,
+            size: Math.random() * 4.5 + 4.5,
+            opacity: Math.random() * 0.6 + 0.4,
+            rotation: Math.random() * Math.PI
         });
     }
 }
 
-function drawHeart(x, y, size) {
-    ctx.beginPath();
-    ctx.moveTo(x, y + size / 4);
-    ctx.quadraticCurveTo(x, y, x + size / 2, y);
-    ctx.quadraticCurveTo(x + size, y, x + size, y + size / 3);
-    ctx.quadraticCurveTo(x + size, y + size * 2 / 3, x + size / 2, y + size);
-    ctx.quadraticCurveTo(x, y + size * 2 / 3, x, y + size / 3);
-    ctx.quadraticCurveTo(x, y, x, y + size / 4);
-    ctx.closePath();
+function drawBackgroundEffects() {
+    ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+    stars.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.fill();
+        s.y += s.speed;
+        if(s.y > canvas.height) s.y = 0;
+    });
+
+    ctx.strokeStyle = "rgba(255, 102, 223, 0.04)";
+    ctx.lineWidth = 1;
+    const gridSpacing = 65;
+    
+    for(let i = 0; i < canvas.width; i += gridSpacing) {
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2, 0);
+        ctx.lineTo(i, canvas.height);
+        ctx.stroke();
+    }
+    for(let i = 0; i < canvas.height; i += gridSpacing) {
+        ctx.beginPath();
+        ctx.moveTo(0, i);
+        ctx.lineTo(canvas.width, i);
+        ctx.stroke();
+    }
 }
 
 function animate() {
-    // Fade background smoothly para may trails ang fireworks
-    ctx.fillStyle = "rgba(10, 0, 16, 0.25)"; 
+    ctx.fillStyle = "rgba(10, 0, 16, 0.22)"; 
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw Stars
-    ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
-    stars.forEach(s => {
-        ctx.globalAlpha = s.alpha + Math.sin(Date.now() * 0.005 + s.x) * 0.2;
-        ctx.fillRect(s.x, s.y, s.size, s.size);
-    });
-    ctx.globalAlpha = 1.0;
+    drawBackgroundEffects();
 
-    // Grow Tree Branches
     branches.forEach(b => {
         if (b.currentProgress < 1) {
-            b.currentProgress += 0.025;
+            b.currentProgress += 0.035;
             b.endX = b.startX + (b.targetX - b.startX) * b.currentProgress;
             b.endY = b.startY + (b.targetY - b.startY) * b.currentProgress;
         }
@@ -319,70 +477,77 @@ function animate() {
 
         if (b.currentProgress >= 1 && !b.childGenerated) {
             b.childGenerated = true;
-            if (b.length > 2.5) {
-                createBranch(b.endX, b.endY, b.angle - 0.42 + (Math.random() * 0.1), b.length * 0.78, b.thickness * 0.7, b.color);
-                createBranch(b.endX, b.endY, b.angle + 0.42 - (Math.random() * 0.1), b.length * 0.78, b.thickness * 0.7, b.color);
+            if (b.length > 3) {
+                // ANIME CHERRY BLOSSOM CURVE MATH: Nagdagdag ng sinus at bias base sa kapal ng sanga
+                let leftAngleBias = -0.45 + (b.thickness > 10 ? -0.15 : 0.05);
+                let rightAngleBias = 0.45 + (b.thickness > 10 ? -0.05 : -0.05);
+
+                createBranch(b.endX, b.endY, b.angle + leftAngleBias + (Math.random() * 0.12), b.length * 0.76, b.thickness * 0.68, b.color);
+                createBranch(b.endX, b.endY, b.angle + rightAngleBias - (Math.random() * 0.12), b.length * 0.76, b.thickness * 0.68, b.color);
             } else {
-                // Punuin ng hugis pusong bulaklak ang mga dulo ng sanga
-                for (let i = 0; i < 5; i++) {
+                // PINalago ang bulaklak para maging mala-cloud ang dating
+                for (let i = 0; i < 6; i++) {
                     flowers.push({
-                        x: b.endX + (Math.random() * 30 - 15),
-                        y: b.endY + (Math.random() * 30 - 15),
+                        x: b.endX + (Math.random() * 22 - 11),
+                        y: b.endY + (Math.random() * 22 - 11),
                         size: 0,
-                        maxSize: Math.random() * 8 + 6,
-                        color: ["#ffccd5", "#ff66df", "#ff3366", "#ff80ab"][Math.floor(Math.random() * 4)]
+                        maxSize: Math.random() * 7 + 4,
+                        color: ["#ffccd5", "#ff80ab", "#ff66df", "#f48fb1"][Math.floor(Math.random() * 4)]
                     });
                 }
             }
         }
     });
 
-    // Draw Heart Flowers on Tree
     flowers.forEach(f => {
-        if (f.size < f.maxSize) f.size += 0.2;
-        ctx.save();
+        if (f.size < f.maxSize) f.size += 0.18;
+
+        let pulse = 0;
+        if (stage === 2) {
+            pulse = Math.sin(Date.now() * 0.012) * 2.2; 
+        }
+
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, Math.max(1, f.size + pulse), 0, Math.PI * 2);
         ctx.fillStyle = f.color;
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = stage === 2 ? 10 : 0;
         ctx.shadowColor = f.color;
-        drawHeart(f.x - f.size/2, f.y - f.size/2, f.size);
         ctx.fill();
-        ctx.restore();
+        ctx.shadowBlur = 0;
     });
 
-    // Update & Draw Fireworks Particles
-    particles.forEach((p, i) => {
-        p.update();
-        p.draw();
-        if (p.alpha <= 0) particles.splice(i, 1);
-    });
+    if (stage === 2) {
+        particles.forEach((p, i) => {
+            p.update();
+            p.draw();
+            if (p.alpha <= 0) particles.splice(i, 1);
+        });
 
-    // Update & Draw Falling Heart Leaves
-    fallingHearts.forEach((heart, i) => {
-        heart.y += heart.speedY;
-        heart.x += Math.sin(Date.now() * 0.003 + heart.x) * 0.8;
-        heart.rotation += heart.rotSpeed;
+        fallingPetals.forEach((petal, i) => {
+            petal.y += petal.speedY;
+            petal.x += Math.sin(Date.now() * 0.004 + petal.x) * 0.6;
+            petal.rotation += 0.015;
 
-        ctx.save();
-        ctx.translate(heart.x, heart.y);
-        ctx.rotate(heart.rotation);
-        ctx.fillStyle = "#ff66df";
-        ctx.globalAlpha = heart.opacity;
-        drawHeart(-heart.size / 2, -heart.size / 2, heart.size);
-        ctx.fill();
-        ctx.restore();
+            ctx.save();
+            ctx.translate(petal.x, petal.y);
+            ctx.rotate(petal.rotation);
+            ctx.fillStyle = "#ff80ab";
+            ctx.globalAlpha = petal.opacity;
+            
+            ctx.beginPath();
+            ctx.ellipse(0, 0, petal.size, petal.size / 1.8, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
 
-        if (heart.y > canvas.height) fallingHearts.splice(i, 1);
-    });
+            if (petal.y > canvas.height) fallingPetals.splice(i, 1);
+        });
+    }
 
     ctx.globalAlpha = 1.0;
     requestAnimationFrame(animate);
 }
 
-// Start everything smoothly
-window.onload = () => {
-    init();
-    animate();
-};
+animate();
 </script>
 
 </body>

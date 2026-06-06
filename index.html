@@ -15,35 +15,69 @@ body {
     color: white;
 }
 
-/* Center content */
+/* Center */
 .container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    z-index: 2;
     width: 90%;
+    z-index: 2;
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 2.8rem;
     color: #ff4fd8;
     text-shadow: 0 0 10px #ff4fd8, 0 0 20px #ff00ff;
-    animation: glow 2s infinite alternate;
-    margin: 0;
 }
 
 p {
     font-size: 1.2rem;
     opacity: 0.9;
-    margin-top: 10px;
 }
 
-/* Glow animation */
+/* Button */
+button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    background: #ff4fd8;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 0 15px #ff4fd8;
+}
+
+/* Hidden message */
+#secret {
+    display: none;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: #fff;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Signature */
+.signature {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    opacity: 0.8;
+    animation: glow 2s infinite alternate;
+}
+
 @keyframes glow {
     from { text-shadow: 0 0 10px #ff4fd8; }
-    to { text-shadow: 0 0 25px #ff00ff, 0 0 40px #ff4fd8; }
+    to { text-shadow: 0 0 20px #ff00ff; }
 }
 
 /* Canvas */
@@ -51,32 +85,6 @@ canvas {
     position: absolute;
     top: 0;
     left: 0;
-}
-
-/* 📱 MOBILE FIXES */
-@media (max-width: 768px) {
-    h1 {
-        font-size: 2rem;
-    }
-
-    p {
-        font-size: 1rem;
-        padding: 0 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.6rem;
-    }
-
-    p {
-        font-size: 0.95rem;
-    }
-
-    .container {
-        transform: translate(-50%, -55%);
-    }
 }
 </style>
 </head>
@@ -86,19 +94,45 @@ canvas {
 <div class="container">
     <h1>🎉 Happy Birthdayyy Nicole sweetieee !!!! 🎂</h1>
     <p>You deserve all the happiness in the world 💖✨</p>
+
+    <button onclick="revealMessage()">💖 Click for a surprise</button>
+
+    <div id="secret">
+        I hope your day is as beautiful as your smile ✨<br>
+        Stay happy always 💕 You’re appreciated more than you know.
+    </div>
+
+    <br><br>
+
+    <audio id="music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d0e7f4c2b6.mp3?filename=romantic-piano-ambient-110397.mp3">
+    </audio>
+
+    <button onclick="document.getElementById('music').play()">
+        🎵 Play Music
+    </button>
+</div>
+
+<div class="signature">
+    Made with 💖 by Revy 💌
 </div>
 
 <canvas id="fireworks"></canvas>
 
 <script>
+function revealMessage() {
+    document.getElementById("secret").style.display = "block";
+}
+
+/* Fireworks */
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
 
-function resizeCanvas() {
+function resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
-resizeCanvas();
+resize();
 
 let particles = [];
 
@@ -129,7 +163,7 @@ class Particle {
     }
 }
 
-function createFirework() {
+function firework() {
     const x = Math.random() * canvas.width;
     const y = Math.random() * canvas.height / 2;
 
@@ -147,17 +181,16 @@ function animate() {
     particles.forEach((p, i) => {
         p.update();
         p.draw();
-
         if (p.alpha <= 0) particles.splice(i, 1);
     });
 
     requestAnimationFrame(animate);
 }
 
-setInterval(createFirework, 900);
+setInterval(firework, 900);
 animate();
 
-window.addEventListener("resize", resizeCanvas);
+window.addEventListener("resize", resize);
 </script>
 
 </body>

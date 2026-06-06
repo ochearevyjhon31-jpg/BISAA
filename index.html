@@ -16,7 +16,7 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Initial Screen Lock Fix (image_005989.png layout match) */
+/* Initial Screen Lock Fix */
 #gatekeeper {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -49,6 +49,7 @@ body {
     box-shadow: 0 0 25px rgba(255, 102, 223, 0.7), 0 0 40px rgba(255, 0, 255, 0.4);
     margin-bottom: 20px;
     display: inline-block;
+    background: #220033; /* Fallback if image fails online */
 }
 
 .counter-title {
@@ -154,6 +155,7 @@ p.subtitle {
     border: 3px solid #ff66df;
     box-shadow: 0 0 25px rgba(255, 102, 223, 0.7), 0 0 40px rgba(255, 0, 255, 0.4);
     margin-bottom: 20px;
+    background: #220033;
 }
 
 /* Floating Aesthetic Cake */
@@ -280,14 +282,14 @@ canvas {
 
 <body>
 
-<!-- GATERKEEPER CAPTURE INITIAL CLICK (Glow Style matches image_005989.png) -->
+<!-- GATEKEEPER CAPTURE INITIAL CLICK -->
 <div id="gatekeeper">
-    <button onclick="startEverything()">👉 Open Birthday Gift ✨</button>
+    <button id="main-start-btn" onclick="startEverything()">👉 Open Birthday Gift ✨</button>
 </div>
 
 <!-- 15 Seconds Cinematic Intro Day Counter Overlay -->
 <div class="intro-overlay" id="introScreen">
-    <img src="nicole 2.jpg" alt="Nicole" class="intro-profile-img">
+    <img src="nicole 2.jpg" alt="Nicole" class="intro-profile-img" onerror="this.src='nicole%202.jpg'; this.onerror=null;">
     <div class="counter-title" id="counterWrapper">
         <p style="margin: 0 0 10px 0;">Nicole, since June 14, 2006...</p>
         <div id="day-counter">0 DAYS</div>
@@ -331,16 +333,16 @@ canvas {
     <polygon points="100,110 95,118 100,128 105,118" fill="#ff66df"/>
 </svg>
 
-<!-- Buttons Control Center (Shows up exactly after tree completion) -->
+<!-- Buttons Control Center -->
 <div class="btn-group-center" id="buttonContainer">
     <button id="btn-mwa" onclick="revealEverything()">click mwa 😘</button>
 </div>
 
-<!-- Hidden Surprise Section (Kept locked until click mwa is pressed) -->
+<!-- Hidden Surprise Section -->
 <div class="container">
     <div class="interactive">
         <div class="surprise-content" id="nicoleContent">
-            <img src="nicole 2.jpg" alt="Nicole" class="profile-img">
+            <img src="nicole 2.jpg" alt="Nicole" class="profile-img" onerror="this.src='nicole%202.jpg'; this.onerror=null;">
             <h1>Happy Birthday, Nicole sweetie! 🎂</h1>
             <p class="subtitle">You deserve all the beautiful things in the world ✨</p>
             
@@ -417,52 +419,63 @@ for(let i = 0; i < 90; i++) {
 
 // TRIGGER FUNCTION UPON GATING PASS
 function startEverything() {
-    document.getElementById("gatekeeper").style.display = "none";
-    document.getElementById("introScreen").style.display = "block";
-    activeIntro = true;
-    
-    // Balanced Fast Growth Trigger (Adjusted vectors for smooth 15s speed run)
-    createBranch(canvas.width / 2, canvas.height, -Math.PI / 2, 12.5, 16, "#281102");
-    
-    // Safe Audio Handshake
-    const iframe = document.getElementById("yt-player");
-    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-    iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-
-    // Run Day Counter (Accelerated speed to hit sweet-spot in 15s)
-    animateDaysCounter(7305, 11500);
-
-    // BACKGROUND FIREWORKS LOOP 
-    introFireworkInterval = setInterval(createFirework, 600);
-
-    // GENERATE FLOATING HEARTS AROUND THE GROWING TREE AREA
-    for(let h=0; h<40; h++) {
-        treeHearts.push({
-            angle: Math.random() * Math.PI * 2,
-            radius: Math.random() * 120 + 40,
-            speed: Math.random() * 0.04 + 0.01,
-            size: Math.random() * 5 + 4,
-            opacity: Math.random() * 0.5 + 0.5,
-            yOffset: Math.random() * -250 - 50 
-        });
-    }
-
-    // EXACT 15 SECONDS TRANSITION SWITCH HOOK (Fast & Snappy!)
-    setTimeout(() => {
-        clearInterval(introFireworkInterval);
-        document.getElementById("introScreen").style.display = "none";
+    try {
+        document.getElementById("gatekeeper").style.display = "none";
+        document.getElementById("introScreen").style.display = "block";
+        activeIntro = true;
         
-        const ch1 = document.getElementById("leftChandelier");
-        const ch2 = document.getElementById("rightChandelier");
-        ch1.style.display = "block";
-        ch2.style.display = "block";
-        setTimeout(() => { ch1.style.opacity = "1"; ch2.style.opacity = "1"; }, 50);
+        // Growth Trigger
+        createBranch(canvas.width / 2, canvas.height, -Math.PI / 2, 12.5, 16, "#281102");
+        
+        // Safe Audio Handshake
+        const iframe = document.getElementById("yt-player");
+        if(iframe && iframe.contentWindow) {
+            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+        }
 
-        // Shows ONLY the "click mwa 😘" button first
+        // Run Day Counter (June 14, 2006 calculation roughly ~7305 days)
+        animateDaysCounter(7305, 11500);
+
+        // BACKGROUND FIREWORKS LOOP 
+        introFireworkInterval = setInterval(createFirework, 600);
+
+        // GENERATE FLOATING HEARTS AROUND THE GROWING TREE AREA
+        for(let h=0; h<40; h++) {
+            treeHearts.push({
+                angle: Math.random() * Math.PI * 2,
+                radius: Math.random() * 120 + 40,
+                speed: Math.random() * 0.04 + 0.01,
+                size: Math.random() * 5 + 4,
+                opacity: Math.random() * 0.5 + 0.5,
+                yOffset: Math.random() * -250 - 50 
+            });
+        }
+
+        // EXACT 15 SECONDS TRANSITION SWITCH HOOK
+        setTimeout(() => {
+            if(introFireworkInterval) clearInterval(introFireworkInterval);
+            document.getElementById("introScreen").style.display = "none";
+            
+            const ch1 = document.getElementById("leftChandelier");
+            const ch2 = document.getElementById("rightChandelier");
+            if(ch1 && ch2) {
+                ch1.style.display = "block";
+                ch2.style.display = "block";
+                setTimeout(() => { ch1.style.opacity = "1"; ch2.style.opacity = "1"; }, 50);
+            }
+
+            // Shows ONLY the "click mwa 😘" button first
+            document.getElementById("buttonContainer").style.display = "block";
+            document.getElementById("revySignature").classList.add("show-signature");
+            stage = 1; 
+        }, 15000); 
+    } catch (e) {
+        // Safe Fail-over if any script throws an unhandled lock online
+        console.error(e);
+        document.getElementById("gatekeeper").style.display = "none";
         document.getElementById("buttonContainer").style.display = "block";
-        document.getElementById("revySignature").classList.add("show-signature");
-        stage = 1; 
-    }, 15000); 
+    }
 }
 
 function animateDaysCounter(targetDays, duration) {
@@ -482,10 +495,7 @@ function animateDaysCounter(targetDays, duration) {
 }
 
 function revealEverything() {
-    // Hide the click mwa button
     document.getElementById("buttonContainer").style.display = "none";
-    
-    // Now trigger and display the final letter box and image section
     document.getElementById("nicoleContent").style.display = "block";
     document.getElementById("babyCake").style.display = "block";
     stage = 2;
@@ -493,7 +503,6 @@ function revealEverything() {
     document.body.classList.add("flash-transition");
     setTimeout(() => document.body.classList.remove("flash-transition"), 400);
     
-    // Continuous celebratory fireworks and petals loop
     setInterval(createFirework, 700);
     setInterval(createPetal, 25);
 }
@@ -622,7 +631,7 @@ function animate() {
 
         branches.forEach(b => {
             if (b.currentProgress < 1) {
-                b.currentProgress += 0.038; // Increased growth pace for snappy 15s completion
+                b.currentProgress += 0.038; 
                 b.endX = b.startX + (b.targetX - b.startX) * b.currentProgress;
                 b.endY = b.startY + (b.targetY - b.startY) * b.currentProgress;
             }
@@ -667,7 +676,7 @@ function animate() {
                                 color: ["#ffccd5", "#ff80ab", "#ff66df", "#f48fb1"][Math.floor(Math.random() * 4)]
                             });
                         }
-                    }, 350); // Faster bloom loading
+                    }, 350); 
                 }
             }
         });
@@ -695,7 +704,7 @@ function animate() {
     });
 
     flowers.forEach(f => {
-        if (f.size < f.maxSize) f.size += 0.15; // Snappier petaling
+        if (f.size < f.maxSize) f.size += 0.15;
 
         let pulse = 0;
         if (stage === 2) {
@@ -736,7 +745,14 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-animate();
+// Ensure execution begins gracefully after loading complete
+window.addEventListener('load', () => {
+    // Check if button binds cleanly
+    const btn = document.getElementById("main-start-btn");
+    if(btn) {
+        console.log("System Initialized Smoothly.");
+    }
+});
 </script>
 
 </body>

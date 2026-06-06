@@ -339,8 +339,8 @@ function firstClick() {
     document.getElementById("btn-surprise").style.display = "none";
     document.getElementById("btn-mwa").style.display = "inline-block";
     stage = 1;
-    // GINAWANG NATURAL CURVED BONSAI STYLE: Mas makapal ang trunk at mas mataas (13.5 length) para malaki pa rin
-    createBranch(canvas.width * 0.52, canvas.height, -Math.PI / 1.95, 13.5, 18, "#261102", 0.07);
+    // SOLID STABLE TRUNK: Balik sa malaki at malapad na sukat para safe ang canvas metrics.
+    createBranch(canvas.width / 2, canvas.height, -Math.PI / 2, 12.5, 16, "#281102");
 }
 
 function revealEverything() {
@@ -360,17 +360,16 @@ function revealEverything() {
     setInterval(createPetal, 30);
 }
 
-function createBranch(startX, startY, angle, length, thickness, color, curveFactor = 0) {
+// FIXED CLEAN GENERATOR FUNCTION
+function createBranch(startX, startY, angle, length, thickness, color) {
     branches.push({
         startX, startY,
         endX: startX, endY: startY,
-        targetX: startX + Math.cos(angle + curveFactor) * length * 11.5,
-        targetY: startY + Math.sin(angle + curveFactor) * length * 11.5,
-        angle: angle + curveFactor, 
-        length, thickness, color,
+        targetX: startX + Math.cos(angle) * length * 11.8,
+        targetY: startY + Math.sin(angle) * length * 11.8,
+        angle, length, thickness, color,
         currentProgress: 0,
-        childGenerated: false,
-        level: thickness
+        childGenerated: false
     });
 }
 
@@ -473,20 +472,21 @@ function animate() {
         if (b.currentProgress >= 1 && !b.childGenerated) {
             b.childGenerated = true;
             if (b.length > 3) {
-                // S-CURVE GENERATION LOGIC: Ang bawat sub-branch ay may bias na kumurba pakaliwa o pakanan gaya ng anime cherry blossom tree
-                let curveLeft = (b.level > 12) ? -0.25 : -0.42;
-                let curveRight = (b.level > 12) ? 0.55 : 0.42;
+                // ANIME CHERRY BLOSSOM CURVE MATH: Nagdagdag ng sinus at bias base sa kapal ng sanga
+                // Para makuha yung "S-Curve" at tabingi na hugis ng totoong matandang puno, gumamit tayo ng shifting angles
+                let leftAngleBias = -0.45 + (b.thickness > 10 ? -0.15 : 0.05);
+                let rightAngleBias = 0.45 + (b.thickness > 10 ? -0.05 : -0.05);
 
-                createBranch(b.endX, b.endY, b.angle + curveLeft + (Math.random() * 0.1), b.length * 0.78, b.thickness * 0.7, b.color, -0.05);
-                createBranch(b.endX, b.endY, b.angle + curveRight - (Math.random() * 0.1), b.length * 0.75, b.thickness * 0.7, b.color, 0.05);
+                createBranch(b.endX, b.endY, b.angle + leftAngleBias + (Math.random() * 0.12), b.length * 0.76, b.thickness * 0.68, b.color);
+                createBranch(b.endX, b.endY, b.angle + rightAngleBias - (Math.random() * 0.12), b.length * 0.76, b.thickness * 0.68, b.color);
             } else {
-                // PINalago ang bulaklak para maging mala-cloud ang dating tulad ng picture niyo pre
+                // Mas maraming dense flowers para maging "Lush Cherry Canopy"
                 for (let i = 0; i < 7; i++) {
                     flowers.push({
-                        x: b.endX + (Math.random() * 24 - 12),
-                        y: b.endY + (Math.random() * 24 - 12),
+                        x: b.endX + (Math.random() * 22 - 11),
+                        y: b.endY + (Math.random() * 22 - 11),
                         size: 0,
-                        maxSize: Math.random() * 7.5 + 4,
+                        maxSize: Math.random() * 7 + 4,
                         color: ["#ffccd5", "#ff80ab", "#ff66df", "#f48fb1"][Math.floor(Math.random() * 4)]
                     });
                 }
@@ -505,7 +505,7 @@ function animate() {
         ctx.beginPath();
         ctx.arc(f.x, f.y, Math.max(1, f.size + pulse), 0, Math.PI * 2);
         ctx.fillStyle = f.color;
-        ctx.shadowBlur = stage === 2 ? 12 : 0;
+        ctx.shadowBlur = stage === 2 ? 10 : 0;
         ctx.shadowColor = f.color;
         ctx.fill();
         ctx.shadowBlur = 0;

@@ -10,13 +10,12 @@ body {
     margin: 0;
     height: 100vh;
     overflow: hidden;
-    /* Rich deep space gradient para hindi plain black/white */
     background: radial-gradient(circle at center, #2c003e 0%, #12001a 50%, #05000a 100%);
     font-family: 'Segoe UI', sans-serif;
     color: white;
 }
 
-/* Container para sa Text at Buttons */
+/* Center */
 .container {
     position: absolute;
     top: 50%;
@@ -47,7 +46,7 @@ p {
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
-/* Image ni Nicole (Siguradong nandoon pa rin!) */
+/* Image ni Nicole */
 .profile-img {
     width: 170px;
     height: 170px;
@@ -145,4 +144,263 @@ canvas {
 
 <div class="container">
     <div class="interactive">
-        <img src="nicole 2.jpg" alt="Nicole" class="profile-img
+        <img src="nicole 2.jpg" alt="Nicole" class="profile-img">
+        <h1>🎉 Happy Birthdayyy Nicole sweetieee !!!! 🎂</h1>
+        <p>You deserve all the happiness in the world 💖✨</p>
+
+        <div class="button-group">
+            <button id="btn-surprise" onclick="firstClick()">💖 Click for a surprise</button>
+            <!-- Napalitan na rito papuntang click mwa -->
+            <button id="btn-mwa" onclick="revealEverything()">click mwa 😘</button>
+        </div>
+
+        <div id="secret">
+            I hope your day is as beautiful as your smile ✨<br>
+            Stay happy always 💕 You’re appreciated more than you know.
+        </div>
+    </div>
+</div>
+
+<iframe id="yt-player" 
+        src="https://www.youtube.com/embed/HuJOVEaOrmw?enablejsapi=1&autoplay=0&loop=1&mute=1" 
+        allow="autoplay">
+</iframe>
+
+<div class="signature">
+    Made with 💖 by Revy 💌
+</div>
+
+<canvas id="mainCanvas"></canvas>
+
+<script>
+const canvas = document.getElementById("mainCanvas");
+const ctx = canvas.getContext("2d");
+
+let stage = 0; 
+let branches = [];
+let flowers = [];
+let particles = [];
+let fallingPetals = [];
+let stars = [];
+
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+// Stars background effect
+for(let i = 0; i < 80; i++) {
+    stars.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: Math.random() * 2,
+        speed: Math.random() * 0.5 + 0.1
+    });
+}
+
+function firstClick() {
+    document.getElementById("btn-surprise").style.display = "none";
+    document.getElementById("btn-mwa").style.display = "inline-block";
+    stage = 1;
+    createBranch(canvas.width / 2, canvas.height, -Math.PI / 2, 10, 14, "#3a1d05");
+}
+
+function revealEverything() {
+    document.getElementById("btn-mwa").style.display = "none";
+    document.getElementById("secret").style.display = "block";
+    stage = 2;
+
+    document.body.classList.add("glitch-flash");
+    setTimeout(() => document.body.classList.remove("glitch-flash"), 400);
+    
+    const iframe = document.getElementById("yt-player");
+    iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    
+    setInterval(createFirework, 700);
+    setInterval(createPetal, 150);
+}
+
+function createBranch(startX, startY, angle, length, thickness, color) {
+    branches.push({
+        startX, startY,
+        endX: startX, endY: startY,
+        targetX: startX + Math.cos(angle) * length * 12,
+        targetY: startY + Math.sin(angle) * length * 12,
+        angle, length, thickness, color,
+        currentProgress: 0,
+        childGenerated: false
+    });
+}
+
+class Particle {
+    constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.radius = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 14;
+        this.speedY = (Math.random() - 0.5) * 14;
+        this.alpha = 1;
+    }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.alpha -= 0.015;
+    }
+    draw() {
+        ctx.globalAlpha = this.alpha;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+}
+
+function createFirework() {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * (canvas.height / 2);
+    const colors = ["#ff4fd8", "#00ffff", "#ffff00", "#ff6b6b", "#a66bff"];
+    for (let i = 0; i < 60; i++) {
+        particles.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
+    }
+}
+
+function createPetal() {
+    if (fallingPetals.length < 60) {
+        fallingPetals.push({
+            x: Math.random() * canvas.width,
+            y: -10,
+            speedX: Math.random() * 2 - 1,
+            speedY: Math.random() * 2 + 1.5,
+            size: Math.random() * 5 + 4,
+            opacity: Math.random() * 0.6 + 0.4,
+            rotation: Math.random() * Math.PI
+        });
+    }
+}
+
+function drawBackgroundEffects() {
+    ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+    stars.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.fill();
+        s.y += s.speed;
+        if(s.y > canvas.height) s.y = 0;
+    });
+
+    ctx.strokeStyle = "rgba(255, 79, 216, 0.05)";
+    ctx.lineWidth = 1;
+    const gridSpacing = 60;
+    
+    for(let i = 0; i < canvas.width; i += gridSpacing) {
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2, 0);
+        ctx.lineTo(i, canvas.height);
+        ctx.stroke();
+    }
+    for(let i = 0; i < canvas.height; i += gridSpacing) {
+        ctx.beginPath();
+        ctx.moveTo(0, i);
+        ctx.lineTo(canvas.width, i);
+        ctx.stroke();
+    }
+}
+
+function animate() {
+    ctx.fillStyle = "rgba(10, 0, 15, 0.25)"; 
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    drawBackgroundEffects();
+
+    branches.forEach(b => {
+        if (b.currentProgress < 1) {
+            b.currentProgress += 0.04;
+            b.endX = b.startX + (b.targetX - b.startX) * b.currentProgress;
+            b.endY = b.startY + (b.targetY - b.startY) * b.currentProgress;
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(b.startX, b.startY);
+        ctx.lineTo(b.endX, b.endY);
+        ctx.lineWidth = b.thickness;
+        ctx.strokeStyle = b.color;
+        ctx.lineCap = "round";
+        ctx.stroke();
+
+        if (b.currentProgress >= 1 && !b.childGenerated) {
+            b.childGenerated = true;
+            if (b.length > 3) {
+                createBranch(b.endX, b.endY, b.angle - 0.45 + Math.random() * 0.2, b.length * 0.75, b.thickness * 0.7, b.color);
+                createBranch(b.endX, b.endY, b.angle + 0.45 - Math.random() * 0.2, b.length * 0.75, b.thickness * 0.7, b.color);
+            } else {
+                for (let i = 0; i < 4; i++) {
+                    flowers.push({
+                        x: b.endX + (Math.random() * 16 - 8),
+                        y: b.endY + (Math.random() * 16 - 8),
+                        size: 0,
+                        maxSize: Math.random() * 7 + 4,
+                        color: ["#ffb7d5", "#ff7fa9", "#ff4fd8"][Math.floor(Math.random() * 3)]
+                    });
+                }
+            }
+        }
+    });
+
+    flowers.forEach(f => {
+        if (f.size < f.maxSize) f.size += 0.2;
+
+        let pulse = 0;
+        if (stage === 2) {
+            pulse = Math.sin(Date.now() * 0.015) * 2.5; 
+        }
+
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, Math.max(1, f.size + pulse), 0, Math.PI * 2);
+        ctx.fillStyle = f.color;
+        ctx.shadowBlur = stage === 2 ? 12 : 0;
+        ctx.shadowColor = f.color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+    });
+
+    if (stage === 2) {
+        particles.forEach((p, i) => {
+            p.update();
+            p.draw();
+            if (p.alpha <= 0) particles.splice(i, 1);
+        });
+
+        fallingPetals.forEach((petal, i) => {
+            petal.y += petal.speedY;
+            petal.x += Math.sin(Date.now() * 0.005 + petal.x) * 0.6;
+            petal.rotation += 0.015;
+
+            ctx.save();
+            ctx.translate(petal.x, petal.y);
+            ctx.rotate(petal.rotation);
+            ctx.fillStyle = "#ff7fa9";
+            ctx.globalAlpha = petal.opacity;
+            
+            ctx.beginPath();
+            ctx.ellipse(0, 0, petal.size, petal.size / 2, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+
+            if (petal.y > canvas.height) fallingPetals.splice(i, 1);
+        });
+    }
+
+    ctx.globalAlpha = 1.0;
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>
+ 

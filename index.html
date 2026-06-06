@@ -39,7 +39,7 @@ body {
     display: none;
 }
 
-/* Exact Chandelier Style from image_f25560.jpg */
+/* Exact Chandelier Style from image_f0f750.jpg */
 .chandelier-container {
     position: absolute;
     top: 0;
@@ -228,45 +228,29 @@ canvas {
     <button id="main-start-btn" onclick="startEverything()">👉 Open Birthday Gift ✨</button>
 </div>
 
-<!-- Accurate SVG Chandelier Layout from image_f25560.jpg -->
+<!-- Accurate SVG Chandelier Layout from image_f0f750.jpg -->
 <div class="chandelier-container" id="chandelierLayer">
     <svg class="chandelier-svg" viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
-        <!-- Center Rod/Chain -->
         <line x1="250" y1="0" x2="250" y2="45" stroke="#ff55d0" stroke-width="3"/>
         <circle cx="250" cy="45" r="7" fill="#fff"/>
-        
-        <!-- Top Crown -->
         <path d="M220 45 Q250 25 280 45" stroke="#ff55d0" stroke-width="2.5" fill="none"/>
         <path d="M200 55 Q250 35 300 55" stroke="#ff55d0" stroke-width="2" fill="none"/>
-        
-        <!-- Main Elegant Swags & Arms (Perfect Curves) -->
         <path d="M160 85 Q250 125 340 85" stroke="#ff00aa" stroke-width="4" fill="none"/>
         <path d="M100 115 Q250 175 400 115" stroke="#ff55d0" stroke-width="4.5" fill="none"/>
         <path d="M50 145 Q250 225 450 145" stroke="#ff00aa" stroke-width="3" fill="none"/>
-        
-        <!-- Upper Connecting Side Arcs -->
         <path d="M250 45 Q180 55 160 85" stroke="#ff55d0" stroke-width="2.5" fill="none"/>
         <path d="M250 45 Q320 55 340 85" stroke="#ff55d0" stroke-width="2.5" fill="none"/>
         <path d="M250 45 Q150 70 100 115" stroke="#ff00aa" stroke-width="2" fill="none"/>
         <path d="M250 45 Q350 70 400 115" stroke="#ff00aa" stroke-width="2" fill="none"/>
-        
-        <!-- Drooping Crystal Beaded Garlands -->
         <path d="M50 145 Q250 250 450 145" stroke="#fff" stroke-width="2" fill="none" stroke-dasharray="3 4"/>
         <path d="M100 115 Q250 195 400 115" stroke="#fff" stroke-width="1.5" fill="none" stroke-dasharray="2 3"/>
-        
-        <!-- Glowing Light Bulb/Candle Points -->
         <circle cx="250" cy="75" r="8" fill="#ffffaa" filter="drop-shadow(0 0 8px #fff)"/>
-        <!-- Inner Ring Bulbs -->
         <circle cx="160" cy="80" r="6" fill="#fff"/>
         <circle cx="340" cy="80" r="6" fill="#fff"/>
-        <!-- Mid Ring Bulbs -->
         <circle cx="100" cy="110" r="7" fill="#ffff55"/>
         <circle cx="400" cy="110" r="7" fill="#ffff55"/>
-        <!-- Outer Ring Premium Bulbs -->
         <circle cx="50" cy="140" r="8" fill="#fff" filter="drop-shadow(0 0 5px #ff55d0)"/>
         <circle cx="450" cy="140" r="8" fill="#fff" filter="drop-shadow(0 0 5px #ff55d0)"/>
-        
-        <!-- Hanging Crystal Diamond Pendalogues -->
         <polygon points="250,170 244,182 250,195 256,182" fill="#fff"/>
         <polygon points="160,122 155,132 160,142 165,132" fill="#ff55d0"/>
         <polygon points="340,122 335,132 340,142 345,132" fill="#ff55d0"/>
@@ -373,20 +357,18 @@ function startEverything() {
     document.getElementById("chandelierLayer").style.display = "block";
     document.getElementById("revySignature").style.display = "block";
     
-    // Auto Music Triggers
     const iframe = document.getElementById("yt-player");
     if(iframe && iframe.contentWindow) {
         iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
         iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
     }
 
-    // Target Days Counter Init
     const birthDate = new Date("2006-06-14");
     const today = new Date();
     const diffDays = Math.ceil(Math.abs(today - birthDate) / (1000 * 60 * 60 * 24));
     animateDaysCounter(diffDays, 8000);
 
-    // Build the precise Heart Layout structures matching image_f25560.jpg
+    // Build the structural assets
     generateAestheticHearts();
 
     stage = 1;
@@ -413,15 +395,13 @@ function animateDaysCounter(targetDays, duration) {
 
 function generateAestheticHearts() {
     const centerX = canvas.width / 2;
-    // Align relative to image location
     const centerY = canvas.height * 0.5 - 130; 
     
     // 1. Bottom Tray/U-Shape Canopy Heart Arch
     const totalCanopyPoints = 60;
     for(let i = 0; i <= totalCanopyPoints; i++) {
-        // Sweep angle underneath image (from 0 to PI around the lower hemisphere)
         let angle = (parseFloat(i) / totalCanopyPoints) * Math.PI;
-        let rx = 160 + (Math.random() * 15 - 75); // Thickness layering
+        let rx = 160 + (Math.random() * 15 - 7.5); 
         let ry = 110 + (Math.random() * 15 - 7.5);
 
         heartCanopy.push({
@@ -439,7 +419,7 @@ function generateAestheticHearts() {
         });
     }
 
-    // 2. Rising Outer Side Heart Framing (Spanning Left & Right Tracks)
+    // 2. Rising Outer Side Heart Framing
     for(let j = 0; j < 35; j++) {
         let isLeft = Math.random() > 0.5;
         sideRisingHearts.push({
@@ -452,6 +432,44 @@ function generateAestheticHearts() {
             alpha: Math.random() * 0.5 + 0.5
         });
     }
+}
+
+// Draw the Elegant Neon Silhouette of the Love Tree Trunk
+function drawLoveTreeTrunk() {
+    if (stage < 1) return;
+    
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height * 0.5 - 130;
+    const trunkBaseY = canvas.height * 0.95; // Adjusted to ground grid level
+    
+    ctx.save();
+    ctx.shadowBlur = 18;
+    ctx.shadowColor = "#ff44cc";
+    ctx.strokeStyle = "rgba(255, 60, 190, 0.75)";
+    ctx.lineWidth = 4.5;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    
+    // Main Trunk Path
+    ctx.beginPath();
+    ctx.moveTo(centerX, trunkBaseY);
+    ctx.quadraticCurveTo(centerX - 15, centerY + 240, centerX, centerY + 110);
+    ctx.stroke();
+    
+    // Left Structural Branch
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(centerX - 5, centerY + 180);
+    ctx.quadraticCurveTo(centerX - 60, centerY + 150, centerX - 120, centerY + 110);
+    ctx.stroke();
+    
+    // Right Structural Branch
+    ctx.beginPath();
+    ctx.moveTo(centerX + 5, centerY + 170);
+    ctx.quadraticCurveTo(centerX + 70, centerY + 140, centerX + 110, centerY + 105);
+    ctx.stroke();
+    
+    ctx.restore();
 }
 
 function revealLetter() {
@@ -470,17 +488,14 @@ class HanabiFirework {
         this.y = y;
         this.particles = [];
         
-        // Japanese Shell Parameters (Double Layer Rings)
         const ringCount1 = 50; 
         const ringCount2 = 35;
         
-        // Outer Core Ring
         for(let i=0; i<ringCount1; i++) {
             let angle = (i / ringCount1) * Math.PI * 2;
-            let speed = Math.random() * 1.5 + 5.5; // High velocity match
+            let speed = Math.random() * 1.5 + 5.5; 
             this.particles.push(new HanabiParticle(x, y, angle, speed, colorTheme, true));
         }
-        // Inner Contrasting Ring
         let innerColor = colorTheme === "#ff66df" ? "#00ffff" : "#ffff33";
         for(let j=0; j<ringCount2; j++) {
             let angle = (j / ringCount2) * Math.PI * 2;
@@ -512,7 +527,7 @@ class HanabiParticle {
         this.decay = Math.random() * 0.01 + 0.007;
         this.gravity = 0.035;
         this.hasTail = hasTail;
-        this.history = []; // Tail tracking for Japanese trailing effect
+        this.history = []; 
     }
     update() {
         if(this.hasTail) {
@@ -522,15 +537,14 @@ class HanabiParticle {
 
         this.x += this.speedX;
         this.y += this.speedY;
-        this.speedY += this.gravity; // Subtle weight descent
-        this.speedX *= 0.98; // Air friction slow down
+        this.speedY += this.gravity; 
+        this.speedX *= 0.98; 
         this.speedY *= 0.98;
         this.alpha -= this.decay;
     }
     draw() {
         ctx.save();
         
-        // Render Trailing Charcoal Spark paths
         if(this.hasTail && this.history.length > 1) {
             ctx.beginPath();
             ctx.moveTo(this.history[0].x, this.history[0].y);
@@ -543,13 +557,11 @@ class HanabiParticle {
             ctx.stroke();
         }
 
-        // Render main spark head
         ctx.globalAlpha = this.alpha;
         ctx.shadowBlur = 15;
         ctx.shadowColor = this.color;
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        // Outer shells break into larger points
         ctx.arc(this.x, this.y, this.hasTail ? 2.5 : 1.8, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
@@ -557,7 +569,6 @@ class HanabiParticle {
 }
 
 function triggerHanabiBlast() {
-    // Left, Right and Center upper segments matching the layout image profile balance
     const spots = [
         {x: canvas.width * 0.2, y: canvas.height * 0.4},
         {x: canvas.width * 0.8, y: canvas.height * 0.42},
@@ -599,7 +610,6 @@ function drawElegantHeart(x, y, size, color, alpha) {
 }
 
 function drawCyberGrid() {
-    // Draw background stars
     ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
     stars.forEach(s => {
         ctx.beginPath();
@@ -609,7 +619,6 @@ function drawCyberGrid() {
         if(s.y > canvas.height) s.y = 0;
     });
 
-    // Perspective Lines Grid Framework matching template perfectly
     ctx.strokeStyle = "rgba(255, 85, 208, 0.05)";
     ctx.lineWidth = 1;
     let horizonY = canvas.height * 0.45;
@@ -635,19 +644,19 @@ function masterAnimationLoop() {
 
     if(stage >= 1) {
         fireworkTimer++;
-        if(fireworkTimer % 40 === 0) { // Steady, beautiful timing
+        if(fireworkTimer % 40 === 0) { 
             triggerHanabiBlast();
         }
+        // Draw the trunk background line framework
+        drawLoveTreeTrunk();
     }
 
-    // Process & Animate Hanabi Fireworks
     fireworkSystems.forEach((sys, idx) => {
         sys.update();
         sys.draw();
         if(sys.isDead()) fireworkSystems.splice(idx, 1);
     });
 
-    // Render & Grow lower Tray Heart Canopy
     heartCanopy.forEach(p => {
         if (p.delay > 0) {
             p.delay--;
@@ -659,7 +668,6 @@ function masterAnimationLoop() {
         drawElegantHeart(p.x, p.y, p.size, p.color, 0.9);
     });
 
-    // Render continuous floating side framing hearts
     sideRisingHearts.forEach(h => {
         h.y -= h.speedY;
         h.x += Math.sin(Date.now() * 0.002 + h.y) * 0.4;
@@ -670,7 +678,6 @@ function masterAnimationLoop() {
         }
     });
 
-    // Falling Petals Stage 2 Interaction
     if (stage === 2) {
         fallingPetals.forEach((petal, idx) => {
             petal.y += petal.speedY;

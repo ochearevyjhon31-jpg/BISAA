@@ -72,36 +72,29 @@ body {
 /* Chandeliers Absolute Positioning */
 .chandelier-svg {
     position: absolute;
-    top: 0;
-    width: 180px;
-    height: 130px;
-    filter: drop-shadow(0 0 12px rgba(255, 102, 223, 0.6)) drop-shadow(0 0 25px rgba(176, 0, 255, 0.3));
+    top: 10px; /* Position similar to image_12.png */
+    width: 250px; /* Slightly larger like example */
+    height: 180px;
+    filter: drop-shadow(0 0 15px rgba(255, 102, 223, 0.8)) drop-shadow(0 0 30px rgba(176, 0, 255, 0.5));
     transform-origin: top center;
     z-index: 5;
     pointer-events: none;
     display: none;
     opacity: 0;
-    transition: opacity 1s ease;
+    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px); /* Initial hidden state */
 }
 
-.left-ch {
-    left: 5%;
-    animation: gentleSwayLeft 5s ease-in-out infinite alternate;
+.chandelier-svg.reveal {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0); /* Final revealed state */
+    animation: gentleSway 5s ease-in-out infinite alternate;
 }
 
-.right-ch {
-    right: 5%;
-    animation: gentleSwayRight 6s ease-in-out infinite alternate;
-}
-
-@keyframes gentleSwayLeft {
-    from { transform: rotate(-3deg); }
-    to { transform: rotate(3deg); }
-}
-
-@keyframes gentleSwayRight {
-    from { transform: rotate(3deg); }
-    to { transform: rotate(-3deg); }
+@keyframes gentleSway {
+    from { transform: translateX(-50%) rotate(-1deg); }
+    to { transform: translateX(-50%) rotate(1deg); }
 }
 
 /* Main Container */
@@ -282,12 +275,10 @@ canvas {
 
 <body>
 
-<!-- GATEKEEPER CAPTURE INITIAL CLICK -->
 <div id="gatekeeper">
     <button id="main-start-btn" onclick="startEverything()">👉 Open Birthday Gift ✨</button>
 </div>
 
-<!-- 15 Seconds Cinematic Intro Day Counter Overlay -->
 <div class="intro-overlay" id="introScreen">
     <img src="nicole 2.jpg" alt="Nicole" class="intro-profile-img" onerror="this.src='nicole%202.jpg'; this.onerror=null;">
     <div class="counter-title" id="counterWrapper">
@@ -297,48 +288,27 @@ canvas {
     </div>
 </div>
 
-<!-- Left Chandelier -->
-<svg class="chandelier-svg left-ch" id="leftChandelier" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
-    <line x1="100" y1="0" x2="100" y2="35" stroke="#ff66df" stroke-width="2.5"/>
-    <circle cx="100" cy="35" r="4" fill="#ffccd5"/>
-    <path d="M70 50 Q100 65 130 50" stroke="#b000ff" stroke-width="3" fill="none"/>
-    <path d="M40 70 Q100 95 160 70" stroke="#ff66df" stroke-width="3.5" fill="none"/>
-    <line x1="100" y1="35" x2="100" y2="85" stroke="#ff66df" stroke-width="2"/>
-    <path d="M100 35 Q60 45 40 70" stroke="#b000ff" stroke-width="2" fill="none"/>
-    <path d="M100 35 Q140 45 160 70" stroke="#b000ff" stroke-width="2" fill="none"/>
-    <path d="M40 70 Q100 125 160 70" stroke="#ff66df" stroke-width="2.5" fill="none" stroke-dasharray="2 3"/>
-    <circle cx="40" cy="56" r="4.5" fill="#fff"/>
-    <circle cx="70" cy="36" r="4.5" fill="#fff"/>
-    <circle cx="100" cy="88" r="5" fill="#ffff33"/>
-    <circle cx="130" cy="36" r="4.5" fill="#fff"/>
-    <circle cx="160" cy="56" r="4.5" fill="#fff"/>
-    <polygon points="100,110 95,118 100,128 105,118" fill="#ff66df"/>
+<svg class="chandelier-svg" id="centralChandelier" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+    <line x1="100" y1="0" x2="100" y2="30" stroke="#ff66df" stroke-width="2.5"/>
+    <circle cx="100" cy="30" r="4" fill="#ffccd5"/>
+    <path d="M70 45 Q100 60 130 45" stroke="#b000ff" stroke-width="3" fill="none"/>
+    <path d="M40 65 Q100 90 160 65" stroke="#ff66df" stroke-width="3.5" fill="none"/>
+    <line x1="100" y1="30" x2="100" y2="80" stroke="#ff66df" stroke-width="2"/>
+    <path d="M100 30 Q60 40 40 65" stroke="#b000ff" stroke-width="2" fill="none"/>
+    <path d="M100 30 Q140 40 160 65" stroke="#b000ff" stroke-width="2" fill="none"/>
+    <path d="M40 65 Q100 120 160 65" stroke="#ff66df" stroke-width="2.5" fill="none" stroke-dasharray="2 3"/>
+    <circle cx="40" cy="51" r="5" fill="#fff"/>
+    <circle cx="70" cy="31" r="5" fill="#fff"/>
+    <circle cx="100" cy="83" r="6" fill="#ffff33"/>
+    <circle cx="130" cy="31" r="5" fill="#fff"/>
+    <circle cx="160" cy="51" r="5" fill="#fff"/>
+    <polygon points="100,105 95,113 100,123 105,113" fill="#ff66df"/>
 </svg>
 
-<!-- Right Chandelier -->
-<svg class="chandelier-svg right-ch" id="rightChandelier" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
-    <line x1="100" y1="0" x2="100" y2="35" stroke="#ff66df" stroke-width="2.5"/>
-    <circle cx="100" cy="35" r="4" fill="#ffccd5"/>
-    <path d="M70 50 Q100 65 130 50" stroke="#b000ff" stroke-width="3" fill="none"/>
-    <path d="M40 70 Q100 95 160 70" stroke="#ff66df" stroke-width="3.5" fill="none"/>
-    <line x1="100" y1="35" x2="100" y2="85" stroke="#ff66df" stroke-width="2"/>
-    <path d="M100 35 Q60 45 40 70" stroke="#b000ff" stroke-width="2" fill="none"/>
-    <path d="M100 35 Q140 45 160 70" stroke="#b000ff" stroke-width="2" fill="none"/>
-    <path d="M40 70 Q100 125 160 70" stroke="#ff66df" stroke-width="2.5" fill="none" stroke-dasharray="2 3"/>
-    <circle cx="40" cy="56" r="4.5" fill="#fff"/>
-    <circle cx="70" cy="36" r="4.5" fill="#fff"/>
-    <circle cx="100" cy="88" r="5" fill="#ffff33"/>
-    <circle cx="130" cy="36" r="4.5" fill="#fff"/>
-    <circle cx="160" cy="56" r="4.5" fill="#fff"/>
-    <polygon points="100,110 95,118 100,128 105,118" fill="#ff66df"/>
-</svg>
-
-<!-- Buttons Control Center -->
 <div class="btn-group-center" id="buttonContainer">
     <button id="btn-mwa" onclick="revealEverything()">click mwa 😘</button>
 </div>
 
-<!-- Hidden Surprise Section -->
 <div class="container">
     <div class="interactive">
         <div class="surprise-content" id="nicoleContent">
@@ -353,7 +323,6 @@ canvas {
     </div>
 </div>
 
-<!-- Floating Neon Cake -->
 <div class="cake-container" id="babyCake">
     <svg width="130" height="130" viewBox="0 0 100 100">
         <filter id="glow">
@@ -457,12 +426,11 @@ function startEverything() {
             if(introFireworkInterval) clearInterval(introFireworkInterval);
             document.getElementById("introScreen").style.display = "none";
             
-            const ch1 = document.getElementById("leftChandelier");
-            const ch2 = document.getElementById("rightChandelier");
-            if(ch1 && ch2) {
-                ch1.style.display = "block";
-                ch2.style.display = "block";
-                setTimeout(() => { ch1.style.opacity = "1"; ch2.style.opacity = "1"; }, 50);
+            // Re-bind the revealed central Chandelier matching image_12.png style
+            const chandelier = document.getElementById("centralChandelier");
+            if(chandelier) {
+                chandelier.style.display = "block";
+                setTimeout(() => chandelier.classList.add("reveal"), 50); // Add class after unhiding
             }
 
             // Shows ONLY the "click mwa 😘" button first

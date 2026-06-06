@@ -16,7 +16,7 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Initial Screen Lock Fix */
+/* Initial Screen Lock */
 #gatekeeper {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -27,7 +27,7 @@ body {
     align-items: center;
 }
 
-/* Premium Cinematic Intro Screens */
+/* Cinematic Intro Screens */
 .intro-overlay {
     position: absolute;
     top: 50%;
@@ -49,7 +49,7 @@ body {
     box-shadow: 0 0 25px rgba(255, 102, 223, 0.7), 0 0 40px rgba(255, 0, 255, 0.4);
     margin-bottom: 20px;
     display: inline-block;
-    background: #220033; /* Fallback if image fails online */
+    background: #220033;
 }
 
 .counter-title {
@@ -69,11 +69,11 @@ body {
     letter-spacing: 2px;
 }
 
-/* Chandeliers Absolute Positioning */
+/* Chandelier Positioning */
 .chandelier-svg {
     position: absolute;
-    top: 10px; /* Position similar to image_12.png */
-    width: 250px; /* Slightly larger like example */
+    top: 10px;
+    width: 250px;
     height: 180px;
     filter: drop-shadow(0 0 15px rgba(255, 102, 223, 0.8)) drop-shadow(0 0 30px rgba(176, 0, 255, 0.5));
     transform-origin: top center;
@@ -83,12 +83,12 @@ body {
     opacity: 0;
     transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
     left: 50%;
-    transform: translateX(-50%) translateY(-20px); /* Initial hidden state */
+    transform: translateX(-50%) translateY(-20px);
 }
 
 .chandelier-svg.reveal {
     opacity: 1;
-    transform: translateX(-50%) translateY(0); /* Final revealed state */
+    transform: translateX(-50%) translateY(0);
     animation: gentleSway 5s ease-in-out infinite alternate;
 }
 
@@ -177,7 +177,7 @@ p.subtitle {
     line-height: 1.4;
 }
 
-/* Aesthetic Buttons Control Center */
+/* Buttons Control Center */
 .btn-group-center {
     position: absolute;
     top: 50%;
@@ -208,7 +208,7 @@ button:hover {
     border-color: rgba(255, 255, 255, 0.6);
 }
 
-/* Premium Aesthetic Glass Letter Box */
+/* Premium Glass Letter Box */
 #secret {
     margin-top: 20px;
     font-size: 1.05rem;
@@ -275,12 +275,14 @@ canvas {
 
 <body>
 
+<!-- GATEKEEPER CAPTURE INITIAL CLICK -->
 <div id="gatekeeper">
     <button id="main-start-btn" onclick="startEverything()">👉 Open Birthday Gift ✨</button>
 </div>
 
+<!-- 15 Seconds Cinematic Intro Day Counter Overlay -->
 <div class="intro-overlay" id="introScreen">
-    <img src="nicole 2.jpg" alt="Nicole" class="intro-profile-img" onerror="this.src='nicole%202.jpg'; this.onerror=null;">
+    <img src="nicole 2.jpg" alt="Nicole" class="intro-profile-img" onerror="this.onerror=null;">
     <div class="counter-title" id="counterWrapper">
         <p style="margin: 0 0 10px 0;">Nicole, since June 14, 2006...</p>
         <div id="day-counter">0 DAYS</div>
@@ -288,6 +290,7 @@ canvas {
     </div>
 </div>
 
+<!-- Central Chandelier SVG -->
 <svg class="chandelier-svg" id="centralChandelier" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
     <line x1="100" y1="0" x2="100" y2="30" stroke="#ff66df" stroke-width="2.5"/>
     <circle cx="100" cy="30" r="4" fill="#ffccd5"/>
@@ -305,14 +308,16 @@ canvas {
     <polygon points="100,105 95,113 100,123 105,113" fill="#ff66df"/>
 </svg>
 
+<!-- Buttons Control Center -->
 <div class="btn-group-center" id="buttonContainer">
     <button id="btn-mwa" onclick="revealEverything()">click mwa 😘</button>
 </div>
 
+<!-- Hidden Surprise Section -->
 <div class="container">
     <div class="interactive">
         <div class="surprise-content" id="nicoleContent">
-            <img src="nicole 2.jpg" alt="Nicole" class="profile-img" onerror="this.src='nicole%202.jpg'; this.onerror=null;">
+            <img src="nicole 2.jpg" alt="Nicole" class="profile-img" onerror="this.onerror=null;">
             <h1>Happy Birthday, Nicole sweetie! 🎂</h1>
             <p class="subtitle">You deserve all the beautiful things in the world ✨</p>
             
@@ -323,6 +328,7 @@ canvas {
     </div>
 </div>
 
+<!-- Floating Neon Cake -->
 <div class="cake-container" id="babyCake">
     <svg width="130" height="130" viewBox="0 0 100 100">
         <filter id="glow">
@@ -343,6 +349,7 @@ canvas {
     <div class="cake-text">Happy Birthday,<br>Babyyyy mwa 🎂💖</div>
 </div>
 
+<!-- Hidden Background Music Player -->
 <iframe id="yt-player" 
         src="https://www.youtube.com/embed/HuJOVEaOrmw?enablejsapi=1&autoplay=0&loop=1&playlist=HuJOVEaOrmw" 
         allow="autoplay">
@@ -386,7 +393,6 @@ for(let i = 0; i < 90; i++) {
     });
 }
 
-// TRIGGER FUNCTION UPON GATING PASS
 function startEverything() {
     try {
         document.getElementById("gatekeeper").style.display = "none";
@@ -396,20 +402,25 @@ function startEverything() {
         // Growth Trigger
         createBranch(canvas.width / 2, canvas.height, -Math.PI / 2, 12.5, 16, "#281102");
         
-        // Safe Audio Handshake
+        // Audio Trigger
         const iframe = document.getElementById("yt-player");
         if(iframe && iframe.contentWindow) {
             iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
             iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
         }
 
-        // Run Day Counter (June 14, 2006 calculation roughly ~7305 days)
-        animateDaysCounter(7305, 11500);
+        // Calculate days since June 14, 2006
+        const birthDate = new Date("2006-06-14");
+        const today = new Date();
+        const diffTime = Math.abs(today - birthDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-        // BACKGROUND FIREWORKS LOOP 
+        animateDaysCounter(diffDays, 11500);
+
+        // Background Fireworks Loop
         introFireworkInterval = setInterval(createFirework, 600);
 
-        // GENERATE FLOATING HEARTS AROUND THE GROWING TREE AREA
+        // Floating Hearts for Tree
         for(let h=0; h<40; h++) {
             treeHearts.push({
                 angle: Math.random() * Math.PI * 2,
@@ -421,25 +432,22 @@ function startEverything() {
             });
         }
 
-        // EXACT 15 SECONDS TRANSITION SWITCH HOOK
+        // Exact 15 Seconds Transition
         setTimeout(() => {
             if(introFireworkInterval) clearInterval(introFireworkInterval);
             document.getElementById("introScreen").style.display = "none";
             
-            // Re-bind the revealed central Chandelier matching image_12.png style
             const chandelier = document.getElementById("centralChandelier");
             if(chandelier) {
                 chandelier.style.display = "block";
-                setTimeout(() => chandelier.classList.add("reveal"), 50); // Add class after unhiding
+                setTimeout(() => chandelier.classList.add("reveal"), 50);
             }
 
-            // Shows ONLY the "click mwa 😘" button first
             document.getElementById("buttonContainer").style.display = "block";
             document.getElementById("revySignature").classList.add("show-signature");
             stage = 1; 
         }, 15000); 
     } catch (e) {
-        // Safe Fail-over if any script throws an unhandled lock online
         console.error(e);
         document.getElementById("gatekeeper").style.display = "none";
         document.getElementById("buttonContainer").style.display = "block";
@@ -713,13 +721,8 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-// Ensure execution begins gracefully after loading complete
 window.addEventListener('load', () => {
-    // Check if button binds cleanly
-    const btn = document.getElementById("main-start-btn");
-    if(btn) {
-        console.log("System Initialized Smoothly.");
-    }
+    animate();
 });
 </script>
 

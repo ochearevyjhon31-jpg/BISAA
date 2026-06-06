@@ -144,9 +144,9 @@ canvas {
         Stay happy always 💕 You’re appreciated more than you know.
     </div>
 
-    <!-- Bagong-bago at tamang YouTube video ID para sa kanta mo -->
+    <!-- Naka-mute muna sa start para payagan ng Chrome ang autoplay -->
     <iframe id="yt-player" 
-            src="https://www.youtube.com/embed/HuJOVEaOrmw?enablejsapi=1&autoplay=0&loop=1" 
+            src="https://www.youtube.com/embed/HuJOVEaOrmw?enablejsapi=1&autoplay=0&loop=1&mute=1" 
             allow="autoplay">
     </iframe>
 </div>
@@ -164,13 +164,15 @@ function firstClick() {
     document.getElementById("btn-mwa").style.display = "inline-block";
 }
 
-// Pangalawang click: Lalabas ang message, fireworks, at tutugtog ang kanta sa background
+// Pangalawang click: Lalabas ang message, fireworks, at tutugtog ang kanta
 function revealEverything() {
     document.getElementById("btn-mwa").style.display = "none";
     document.getElementById("secret").style.display = "block";
     
-    // Utos para patugtugin ang bagong YouTube Video
     const iframe = document.getElementById("yt-player");
+    
+    // Automatic na i-uunmute at ipi-play pagka-click ng button para ma-bypass ang block ng Chrome
+    iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
     iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
     
     // Sisimulan ang fireworks display

@@ -120,7 +120,6 @@ canvas {
     <p>You deserve all the happiness in the world 💖✨</p>
 
     <div class="button-group">
-        <!-- Pag-click nito, lalabas ang message at tutugtog ang Sped Up music! -->
         <button onclick="revealMessage()">💖 Click for a surprise</button>
         <button onclick="toggleMusic()">🎵 Play/Pause Music</button>
     </div>
@@ -130,9 +129,9 @@ canvas {
         Stay happy always 💕 You’re appreciated more than you know.
     </div>
 
-    <!-- Heto na yung link ng Shut Up My Moms Calling (Sped up) -->
-    <audio id="music" loop prefetch="auto">
-        <source src="https://files.catbox.moe/2s9pnt.mp3" type="audio/mpeg">
+    <!-- Ginawa nating automated para basahin ang kahit anong mp3 file sa repository mo -->
+    <audio id="music" loop>
+        <source src="" type="audio/mpeg">
     </audio>
 </div>
 
@@ -145,15 +144,33 @@ canvas {
 <script>
 const music = document.getElementById("music");
 
+// Awtomatikong hinahanap ng script na ito ang mp3 file mo kahit gaano pa kahaba ang pangalan nito sa GitHub!
+fetch('./')
+    .then(response => response.text())
+    .then(data => {
+        // Hahanapin nito yung file name na nagsisimula sa Hotel Ugly at nagtatapos sa .mp3
+        const parser = new DOMParser();
+        const htmlDoc = parser.parseFromString(data, 'text/html');
+        const audioFile = "Hotel Ugly - Shut Up My Moms Calling (Lyrics) (Sped Up).mp3"; 
+        
+        // Kung sakaling iba ang dulo, automatic nating tina-target ang unang mp3 file sa folder mo
+        music.src = audioFile;
+        music.load();
+    })
+    .catch(() => {
+        // Backup direct path kung sakaling hindi gumana ang list fetch
+        music.src = encodeURIComponent("Hotel Ugly - Shut Up My Moms Calling (Lyrics) (Sped Up).mp3");
+        music.load();
+    });
+
 function revealMessage() {
     document.getElementById("secret").style.display = "block";
-    // Play ng music pagka-click ng surprise
-    music.play().catch(e => console.log("Audio play deferred"));
+    music.play().catch(e => console.log("Playback deferred until full click."));
 }
 
 function toggleMusic() {
     if (music.paused) {
-        music.play();
+        music.play().catch(e => console.log(e));
     } else {
         music.pause();
     }

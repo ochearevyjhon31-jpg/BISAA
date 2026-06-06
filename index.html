@@ -54,12 +54,12 @@ p {
 /* Button */
 button {
     margin: 10px 5px;
-    padding: 12px 20px;
+    padding: 12px 25px;
     border: none;
     border-radius: 25px;
     background: #ff4fd8;
     color: white;
-    font-size: 1rem;
+    font-size: 1.1rem;
     cursor: pointer;
     box-shadow: 0 0 15px #ff4fd8;
     transition: 0.3s;
@@ -70,7 +70,11 @@ button:hover {
     box-shadow: 0 0 25px #ff4fd8;
 }
 
-/* Hidden message */
+/* Hidden dynamic elements */
+#btn-mwa {
+    display: none; /* Itatago muna hanggang di nacliclick ang unang surprise */
+}
+
 #secret {
     display: none;
     margin-top: 20px;
@@ -107,6 +111,15 @@ canvas {
     top: 0;
     left: 0;
 }
+
+/* Nakatagong YouTube Player */
+#yt-player {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
 </style>
 </head>
 
@@ -119,20 +132,23 @@ canvas {
     <h1>🎉 Happy Birthdayyy Nicole sweetieee !!!! 🎂</h1>
     <p>You deserve all the happiness in the world 💖✨</p>
 
+    <!-- Dito ang kontrol ng mga Buttons -->
     <div class="button-group">
-        <button onclick="revealMessage()">💖 Click for a surprise</button>
-        <button onclick="toggleMusic()">🎵 Play/Pause Music</button>
+        <button id="btn-surprise" onclick="firstClick()">💖 Click for a surprise</button>
+        <button id="btn-mwa" onclick="revealEverything()">file mwa 😘</button>
     </div>
 
+    <!-- Mensahe na lalabas sa huli -->
     <div id="secret">
         I hope your day is as beautiful as your smile ✨<br>
         Stay happy always 💕 You’re appreciated more than you know.
     </div>
 
-    <!-- Ginawa nating automated para basahin ang kahit anong mp3 file sa repository mo -->
-    <audio id="music" loop>
-        <source src="" type="audio/mpeg">
-    </audio>
+    <!-- YouTube Iframe Embed Code -->
+    <iframe id="yt-player" 
+            src="https://www.youtube.com/embed/SABOTONG_VIDEO_ID?enablejsapi=1&autoplay=0&loop=1" 
+            allow="autoplay">
+    </iframe>
 </div>
 
 <div class="signature">
@@ -142,41 +158,27 @@ canvas {
 <canvas id="fireworks"></canvas>
 
 <script>
-const music = document.getElementById("music");
+// Unang click: Itatago ang unang button, lalabas ang "file mwa"
+function firstClick() {
+    document.getElementById("btn-surprise").style.display = "none";
+    document.getElementById("btn-mwa").style.display = "inline-block";
+}
 
-// Awtomatikong hinahanap ng script na ito ang mp3 file mo kahit gaano pa kahaba ang pangalan nito sa GitHub!
-fetch('./')
-    .then(response => response.text())
-    .then(data => {
-        // Hahanapin nito yung file name na nagsisimula sa Hotel Ugly at nagtatapos sa .mp3
-        const parser = new DOMParser();
-        const htmlDoc = parser.parseFromString(data, 'text/html');
-        const audioFile = "Hotel Ugly - Shut Up My Moms Calling (Lyrics) (Sped Up).mp3"; 
-        
-        // Kung sakaling iba ang dulo, automatic nating tina-target ang unang mp3 file sa folder mo
-        music.src = audioFile;
-        music.load();
-    })
-    .catch(() => {
-        // Backup direct path kung sakaling hindi gumana ang list fetch
-        music.src = encodeURIComponent("Hotel Ugly - Shut Up My Moms Calling (Lyrics) (Sped Up).mp3");
-        music.load();
-    });
-
-function revealMessage() {
+// Pangalawang click: Lalabas ang message, fireworks, at tutugtog ang kanta
+function revealEverything() {
+    document.getElementById("btn-mwa").style.display = "none";
     document.getElementById("secret").style.display = "block";
-    music.play().catch(e => console.log("Playback deferred until full click."));
+    
+    // Utos para patugtugin ang YouTube Video sa background
+    const iframe = document.getElementById("yt-player");
+    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    
+    // Sisimulan ang fireworks display
+    setInterval(firework, 900);
+    animate();
 }
 
-function toggleMusic() {
-    if (music.paused) {
-        music.play().catch(e => console.log(e));
-    } else {
-        music.pause();
-    }
-}
-
-/* Fireworks Logic */
+/* Fireworks Animation Logic */
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
 
@@ -237,9 +239,6 @@ function animate() {
 
     requestAnimationFrame(animate);
 }
-
-setInterval(firework, 900);
-animate();
 
 window.addEventListener("resize", resize);
 </script>

@@ -1,26 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Happy Birthday!</title>
-    <style>
-        body{
-            text-align:center;
-            font-family:Arial,sans-serif;
-            background:linear-gradient(to right,#ff9a9e,#fad0c4);
-            margin-top:100px;
-        }
-        h1{
-            font-size:60px;
-            color:white;
-        }
-        p{
-            font-size:24px;
-            color:white;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Nicole 💖</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at top, #1a0023, #000);
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+/* Center content */
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 2;
+    width: 90%;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #ff4fd8;
+    text-shadow: 0 0 10px #ff4fd8, 0 0 20px #ff00ff;
+    animation: glow 2s infinite alternate;
+    margin: 0;
+}
+
+p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-top: 10px;
+}
+
+/* Glow animation */
+@keyframes glow {
+    from { text-shadow: 0 0 10px #ff4fd8; }
+    to { text-shadow: 0 0 25px #ff00ff, 0 0 40px #ff4fd8; }
+}
+
+/* Canvas */
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* 📱 MOBILE FIXES */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    p {
+        font-size: 0.95rem;
+    }
+
+    .container {
+        transform: translate(-50%, -55%);
+    }
+}
+</style>
 </head>
+
 <body>
-    <h1>🎂 Happy Birthday! 🎉</h1>
-    <p>Wishing you happiness, success, and lots of cake!</p>
+
+<div class="container">
+    <h1>🎉 Happy Birthdayyy Nicole sweetieee !!!! 🎂</h1>
+    <p>You deserve all the happiness in the world 💖✨</p>
+</div>
+
+<canvas id="fireworks"></canvas>
+
+<script>
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+
+let particles = [];
+
+class Particle {
+    constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.radius = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 8;
+        this.speedY = (Math.random() - 0.5) * 8;
+        this.alpha = 1;
+    }
+
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.alpha -= 0.02;
+    }
+
+    draw() {
+        ctx.globalAlpha = this.alpha;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+    }
+}
+
+function createFirework() {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height / 2;
+
+    const colors = ["#ff4fd8", "#00ffff", "#ffff00", "#ff6b6b", "#a66bff"];
+
+    for (let i = 0; i < 70; i++) {
+        particles.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
+    }
+}
+
+function animate() {
+    ctx.fillStyle = "rgba(0,0,0,0.25)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p, i) => {
+        p.update();
+        p.draw();
+
+        if (p.alpha <= 0) particles.splice(i, 1);
+    });
+
+    requestAnimationFrame(animate);
+}
+
+setInterval(createFirework, 900);
+animate();
+
+window.addEventListener("resize", resizeCanvas);
+</script>
+
 </body>
 </html>

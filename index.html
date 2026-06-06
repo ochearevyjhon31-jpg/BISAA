@@ -16,7 +16,7 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Bulletproof Absolute Positioning para sa Chandeliers */
+/* Chandeliers Absolute Positioning */
 .chandelier-svg {
     position: absolute;
     top: 0;
@@ -26,16 +26,16 @@ body {
     transform-origin: top center;
     z-index: 5;
     pointer-events: none;
-    display: block !important; /* Pwersahing lumabas */
+    display: block !important;
 }
 
 .left-ch {
-    left: 5%; /* Naka-angkla sa kaliwa */
+    left: 5%;
     animation: gentleSwayLeft 5s ease-in-out infinite alternate;
 }
 
 .right-ch {
-    right: 5%; /* Naka-angkla sa kanan */
+    right: 5%;
     animation: gentleSwayRight 6s ease-in-out infinite alternate;
 }
 
@@ -224,7 +224,6 @@ canvas {
 
 <body>
 
-<!-- Left Chandelier -->
 <svg class="chandelier-svg left-ch" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
     <line x1="100" y1="0" x2="100" y2="35" stroke="#ff66df" stroke-width="2.5"/>
     <circle cx="100" cy="35" r="4" fill="#ffccd5"/>
@@ -242,7 +241,6 @@ canvas {
     <polygon points="100,110 95,118 100,128 105,118" fill="#ff66df"/>
 </svg>
 
-<!-- Right Chandelier -->
 <svg class="chandelier-svg right-ch" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
     <line x1="100" y1="0" x2="100" y2="35" stroke="#ff66df" stroke-width="2.5"/>
     <circle cx="100" cy="35" r="4" fill="#ffccd5"/>
@@ -260,13 +258,11 @@ canvas {
     <polygon points="100,110 95,118 100,128 105,118" fill="#ff66df"/>
 </svg>
 
-<!-- Buttons Control Center -->
 <div class="btn-group-center" id="buttonContainer">
     <button id="btn-surprise" onclick="firstClick()">💖 Click for a surprise</button>
     <button id="btn-mwa" onclick="revealEverything()">click mwa 😘</button>
 </div>
 
-<!-- Hidden Surprise Section -->
 <div class="container">
     <div class="interactive">
         <div class="surprise-content" id="nicoleContent">
@@ -281,7 +277,6 @@ canvas {
     </div>
 </div>
 
-<!-- Floating Neon Cake -->
 <div class="cake-container" id="babyCake">
     <svg width="130" height="130" viewBox="0 0 100 100">
         <filter id="glow">
@@ -344,7 +339,8 @@ function firstClick() {
     document.getElementById("btn-surprise").style.display = "none";
     document.getElementById("btn-mwa").style.display = "inline-block";
     stage = 1;
-    createBranch(canvas.width / 2, canvas.height, -Math.PI / 2, 11.5, 12, "#2e1603");
+    // GINAWANG NATURAL CURVED BONSAI STYLE: Mas makapal ang trunk at mas mataas (13.5 length) para malaki pa rin
+    createBranch(canvas.width * 0.52, canvas.height, -Math.PI / 1.95, 13.5, 18, "#261102", 0.07);
 }
 
 function revealEverything() {
@@ -364,15 +360,17 @@ function revealEverything() {
     setInterval(createPetal, 30);
 }
 
-function createBranch(startX, startY, angle, length, thickness, color) {
+function createBranch(startX, startY, angle, length, thickness, color, curveFactor = 0) {
     branches.push({
         startX, startY,
         endX: startX, endY: startY,
-        targetX: startX + Math.cos(angle) * length * 12.2,
-        targetY: startY + Math.sin(angle) * length * 12.2,
-        angle, length, thickness, color,
+        targetX: startX + Math.cos(angle + curveFactor) * length * 11.5,
+        targetY: startY + Math.sin(angle + curveFactor) * length * 11.5,
+        angle: angle + curveFactor, 
+        length, thickness, color,
         currentProgress: 0,
-        childGenerated: false
+        childGenerated: false,
+        level: thickness
     });
 }
 
@@ -475,16 +473,21 @@ function animate() {
         if (b.currentProgress >= 1 && !b.childGenerated) {
             b.childGenerated = true;
             if (b.length > 3) {
-                createBranch(b.endX, b.endY, b.angle - 0.43 + Math.random() * 0.16, b.length * 0.75, b.thickness * 0.68, b.color);
-                createBranch(b.endX, b.endY, b.angle + 0.43 - Math.random() * 0.16, b.length * 0.75, b.thickness * 0.68, b.color);
+                // S-CURVE GENERATION LOGIC: Ang bawat sub-branch ay may bias na kumurba pakaliwa o pakanan gaya ng anime cherry blossom tree
+                let curveLeft = (b.level > 12) ? -0.25 : -0.42;
+                let curveRight = (b.level > 12) ? 0.55 : 0.42;
+
+                createBranch(b.endX, b.endY, b.angle + curveLeft + (Math.random() * 0.1), b.length * 0.78, b.thickness * 0.7, b.color, -0.05);
+                createBranch(b.endX, b.endY, b.angle + curveRight - (Math.random() * 0.1), b.length * 0.75, b.thickness * 0.7, b.color, 0.05);
             } else {
-                for (let i = 0; i < 5; i++) {
+                // PINalago ang bulaklak para maging mala-cloud ang dating tulad ng picture niyo pre
+                for (let i = 0; i < 7; i++) {
                     flowers.push({
-                        x: b.endX + (Math.random() * 16 - 8),
-                        y: b.endY + (Math.random() * 16 - 8),
+                        x: b.endX + (Math.random() * 24 - 12),
+                        y: b.endY + (Math.random() * 24 - 12),
                         size: 0,
-                        maxSize: Math.random() * 6.5 + 3.5,
-                        color: ["#ffccd5", "#ff80ab", "#ff66df"][Math.floor(Math.random() * 3)]
+                        maxSize: Math.random() * 7.5 + 4,
+                        color: ["#ffccd5", "#ff80ab", "#ff66df", "#f48fb1"][Math.floor(Math.random() * 4)]
                     });
                 }
             }
@@ -502,7 +505,7 @@ function animate() {
         ctx.beginPath();
         ctx.arc(f.x, f.y, Math.max(1, f.size + pulse), 0, Math.PI * 2);
         ctx.fillStyle = f.color;
-        ctx.shadowBlur = stage === 2 ? 10 : 0;
+        ctx.shadowBlur = stage === 2 ? 12 : 0;
         ctx.shadowColor = f.color;
         ctx.fill();
         ctx.shadowBlur = 0;

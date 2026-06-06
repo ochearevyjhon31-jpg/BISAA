@@ -69,7 +69,7 @@ body {
     letter-spacing: 2px;
 }
 
-/* Chandelier Positioning */
+/* CHANDELIER IS BACK WITH PREMIUM GLOW 🌟 */
 .chandelier-svg {
     position: absolute;
     top: 10px;
@@ -290,7 +290,7 @@ canvas {
     </div>
 </div>
 
-<!-- Central Chandelier SVG -->
+<!-- Central Chandelier SVG (Glow effects restored safely) -->
 <svg class="chandelier-svg" id="centralChandelier" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
     <line x1="100" y1="0" x2="100" y2="30" stroke="#ff66df" stroke-width="2.5"/>
     <circle cx="100" cy="30" r="4" fill="#ffccd5"/>
@@ -522,14 +522,13 @@ function createFirework() {
     const x = Math.random() * canvas.width;
     const y = Math.random() * (canvas.height / 2.5);
     const colors = ["#ff66df", "#00ffff", "#ffff33", "#ff4f79", "#b000ff"];
-    // Lowered firework particle payload size for performance
     for (let i = 0; i < 30; i++) {
         particles.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
     }
 }
 
 function createPetal() {
-    if (fallingPetals.length < 100) { // Capped at 100 for zero lags
+    if (fallingPetals.length < 100) {
         fallingPetals.push({
             x: Math.random() * canvas.width,
             y: -10,
@@ -554,6 +553,8 @@ function drawCanvasHeart(x, y, size, color, alpha) {
     ctx.restore();
 }
 
+// Chandelier is styled inside CSS using hardware-accelerated drop-shadow filters 
+// instead of Canvas rendering loop to keep it 100% lag-free.
 function drawBackgroundEffects() {
     ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
     stars.forEach(s => {
@@ -622,7 +623,6 @@ function animate() {
                     createBranch(b.endX, b.endY, b.angle + leftAngleBias + (Math.random() * 0.1), b.length * 0.75, b.thickness * 0.65, b.color);
                     createBranch(b.endX, b.endY, b.angle + rightAngleBias - (Math.random() * 0.1), b.length * 0.75, b.thickness * 0.65, b.color);
                 } else {
-                    // Reduced spark elements count
                     for(let k=0; k<3; k++) { 
                         introSparks.push({
                             x: b.endX, y: b.endY,

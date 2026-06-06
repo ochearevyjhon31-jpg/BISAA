@@ -228,7 +228,6 @@ canvas {
     <button id="main-start-btn" onclick="startEverything()">👉 Open Birthday Gift ✨</button>
 </div>
 
-<!-- Accurate SVG Chandelier Layout from image_f0f750.jpg -->
 <div class="chandelier-container" id="chandelierLayer">
     <svg class="chandelier-svg" viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
         <line x1="250" y1="0" x2="250" y2="45" stroke="#ff55d0" stroke-width="3"/>
@@ -259,7 +258,6 @@ canvas {
     </svg>
 </div>
 
-<!-- Main Display Elements -->
 <div class="intro-overlay" id="introScreen">
     <div style="position: relative; display: inline-block; margin-bottom: 5px;">
         <img src="nicole 2.jpg" alt="Nicole" class="intro-profile-img" onerror="this.onerror=null;">
@@ -289,7 +287,6 @@ canvas {
     </div>
 </div>
 
-<!-- Floating Neon Cake -->
 <div class="cake-container" id="babyCake">
     <svg width="120" height="120" viewBox="0 0 100 100">
         <filter id="glow">
@@ -310,7 +307,6 @@ canvas {
     <div class="cake-text">Happy Birthday,<br>Babyyyy mwa 🎂💖</div>
 </div>
 
-<!-- Background Music -->
 <iframe id="yt-player" 
         src="https://www.youtube.com/embed/HuJOVEaOrmw?enablejsapi=1&autoplay=0&loop=1&playlist=HuJOVEaOrmw" 
         allow="autoplay">
@@ -330,7 +326,7 @@ let stage = 0;
 let fireworkSystems = [];
 let fallingPetals = [];
 let stars = [];
-let heartCanopy = [];
+let flowerCanopyPoints = [];
 let sideRisingHearts = [];
 let fireworkTimer = 0;
 
@@ -368,8 +364,8 @@ function startEverything() {
     const diffDays = Math.ceil(Math.abs(today - birthDate) / (1000 * 60 * 60 * 24));
     animateDaysCounter(diffDays, 8000);
 
-    // Build the structural assets
-    generateAestheticHearts();
+    // Build the structural tree flowers & arch
+    generateAestheticCanopy();
 
     stage = 1;
 
@@ -393,33 +389,36 @@ function animateDaysCounter(targetDays, duration) {
     window.requestAnimationFrame(step);
 }
 
-function generateAestheticHearts() {
+// Generates the upward curve layout pattern mirroring exactly your provided tree flower screen
+function generateAestheticCanopy() {
     const centerX = canvas.width / 2;
-    const centerY = canvas.height * 0.5 - 130; 
-    
-    // 1. Bottom Tray/U-Shape Canopy Heart Arch
-    const totalCanopyPoints = 60;
-    for(let i = 0; i <= totalCanopyPoints; i++) {
-        let angle = (parseFloat(i) / totalCanopyPoints) * Math.PI;
-        let rx = 160 + (Math.random() * 15 - 7.5); 
-        let ry = 110 + (Math.random() * 15 - 7.5);
+    // Posisyon sa may tapat ng "click mwa" area
+    const targetYBase = canvas.height * 0.82; 
 
-        heartCanopy.push({
-            baseX: centerX + Math.cos(angle) * 160,
-            baseY: centerY + Math.sin(angle) * 110,
+    const totalFlowerBlooms = 140;
+    for(let i = 0; i < totalFlowerBlooms; i++) {
+        // Anggulo na lumilikha ng paitaas na pabilog na arko (mula PI hanggang 2*PI para salubong pataas)
+        let angle = Math.PI + (parseFloat(i) / totalFlowerBlooms) * Math.PI;
+        let radiusX = 170 + (Math.random() * 25 - 12.5);
+        let radiusY = 90 + (Math.random() * 20 - 10);
+
+        let tx = centerX + Math.cos(angle) * radiusX;
+        let ty = targetYBase + Math.sin(angle) * radiusY + 30;
+
+        flowerCanopyPoints.push({
             x: centerX,
-            y: canvas.height + 50,
-            targetX: centerX + Math.cos(angle) * 160 + (Math.random() * 20 - 10),
-            targetY: centerY + Math.sin(angle) * 110 + (Math.random() * 20 - 10),
-            size: Math.random() * 7 + 7,
-            color: ["#ff44cc", "#ff66df", "#ff80ab", "#ffccd5", "#e91e63"][Math.floor(Math.random() * 5)],
+            y: canvas.height + 40,
+            targetX: tx,
+            targetY: ty,
+            size: Math.random() * 5 + 6,
+            color: ["#ff44cc", "#ff66df", "#ff80ab", "#ffccd5", "#ff72be"][Math.floor(Math.random() * 5)],
             progress: 0,
-            speed: Math.random() * 0.02 + 0.015,
-            delay: Math.random() * 40
+            speed: Math.random() * 0.02 + 0.012,
+            delay: Math.random() * 35
         });
     }
 
-    // 2. Rising Outer Side Heart Framing
+    // Side framing particles
     for(let j = 0; j < 35; j++) {
         let isLeft = Math.random() > 0.5;
         sideRisingHearts.push({
@@ -427,47 +426,67 @@ function generateAestheticHearts() {
             y: canvas.height + Math.random() * 400,
             speedY: Math.random() * 1.5 + 0.8,
             driftX: Math.sin(Math.random() * Math.PI),
-            size: Math.random() * 8 + 6,
+            size: Math.random() * 6 + 5,
             color: isLeft ? "#ff66df" : "#ff44cc",
             alpha: Math.random() * 0.5 + 0.5
         });
     }
 }
 
-// Draw the Elegant Neon Silhouette of the Love Tree Trunk
+// Dynamic Vector Curved Tree Trunk at Branches structure matching the image
 function drawLoveTreeTrunk() {
     if (stage < 1) return;
     
     const centerX = canvas.width / 2;
-    const centerY = canvas.height * 0.5 - 130;
-    const trunkBaseY = canvas.height * 0.95; // Adjusted to ground grid level
-    
+    const baseTrunkY = canvas.height * 0.96;
+    const splitY = canvas.height * 0.85; 
+    const buttonCenterY = canvas.height * 0.82;
+
     ctx.save();
-    ctx.shadowBlur = 18;
+    ctx.shadowBlur = 12;
     ctx.shadowColor = "#ff44cc";
-    ctx.strokeStyle = "rgba(255, 60, 190, 0.75)";
-    ctx.lineWidth = 4.5;
+    ctx.strokeStyle = "rgba(100, 45, 15, 0.85)"; // Elegant brown glowing bark accent
+    ctx.lineWidth = 6;
     ctx.lineCap = "round";
-    ctx.lineJoin = "round";
     
-    // Main Trunk Path
+    // Main base trunk line
     ctx.beginPath();
-    ctx.moveTo(centerX, trunkBaseY);
-    ctx.quadraticCurveTo(centerX - 15, centerY + 240, centerX, centerY + 110);
+    ctx.moveTo(centerX, baseTrunkY);
+    ctx.lineTo(centerX, splitY);
     ctx.stroke();
-    
-    // Left Structural Branch
-    ctx.lineWidth = 3;
+
+    // Secondary vector structural branches sweeping up around the click target
+    ctx.lineWidth = 3.5;
+    ctx.strokeStyle = "rgba(120, 50, 30, 0.75)";
+
+    // Left main branch sweeping upwards
     ctx.beginPath();
-    ctx.moveTo(centerX - 5, centerY + 180);
-    ctx.quadraticCurveTo(centerX - 60, centerY + 150, centerX - 120, centerY + 110);
+    ctx.moveTo(centerX, splitY);
+    ctx.quadraticCurveTo(centerX - 60, splitY + 5, centerX - 120, buttonCenterY - 15);
     ctx.stroke();
-    
-    // Right Structural Branch
+
+    // Right main branch sweeping upwards
     ctx.beginPath();
-    ctx.moveTo(centerX + 5, centerY + 170);
-    ctx.quadraticCurveTo(centerX + 70, centerY + 140, centerX + 110, centerY + 105);
+    ctx.moveTo(centerX, splitY);
+    ctx.quadraticCurveTo(centerX + 60, splitY + 5, centerX + 120, buttonCenterY - 15);
     ctx.stroke();
+
+    // Sub-branches rendering
+    ctx.lineWidth = 1.8;
+    for(let k = 1; k <= 5; k++) {
+        let factor = k / 6;
+        // left micro branch
+        ctx.beginPath();
+        ctx.moveTo(centerX - (60 * factor), splitY + 3);
+        ctx.quadraticCurveTo(centerX - 110, splitY - (40 * factor), centerX - (150 * factor), buttonCenterY + 10);
+        ctx.stroke();
+
+        // right micro branch
+        ctx.beginPath();
+        ctx.moveTo(centerX + (60 * factor), splitY + 3);
+        ctx.quadraticCurveTo(centerX + 110, splitY - (40 * factor), centerX + (150 * factor), buttonCenterY + 10);
+        ctx.stroke();
+    }
     
     ctx.restore();
 }
@@ -595,6 +614,17 @@ function createPetal() {
     }
 }
 
+function drawCherryBloomCircular(x, y, size, color) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = color;
+    ctx.beginPath();
+    ctx.arc(x, y, size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+}
+
 function drawElegantHeart(x, y, size, color, alpha) {
     ctx.save();
     ctx.globalAlpha = alpha;
@@ -647,7 +677,7 @@ function masterAnimationLoop() {
         if(fireworkTimer % 40 === 0) { 
             triggerHanabiBlast();
         }
-        // Draw the trunk background line framework
+        // Iguhit ang mga sanga ng puno
         drawLoveTreeTrunk();
     }
 
@@ -657,15 +687,16 @@ function masterAnimationLoop() {
         if(sys.isDead()) fireworkSystems.splice(idx, 1);
     });
 
-    heartCanopy.forEach(p => {
+    // Drawing the perfect arch tree flower blooms precisely matching your target image structure
+    flowerCanopyPoints.forEach(p => {
         if (p.delay > 0) {
             p.delay--;
         } else if (p.progress < 1) {
             p.progress += p.speed;
             p.x = canvas.width / 2 + (p.targetX - (canvas.width / 2)) * p.progress;
-            p.y = (canvas.height + 50) - ((canvas.height + 50) - p.targetY) * p.progress;
+            p.y = (canvas.height + 40) - ((canvas.height + 40) - p.targetY) * p.progress;
         }
-        drawElegantHeart(p.x, p.y, p.size, p.color, 0.9);
+        drawCherryBloomCircular(p.x, p.y, p.size, p.color);
     });
 
     sideRisingHearts.forEach(h => {
